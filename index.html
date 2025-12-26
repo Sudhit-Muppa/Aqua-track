@@ -37,6 +37,7 @@
                 <a href="#home" class="nav-link active">Home</a>
                 <a href="#about-team" class="nav-link">About the Team</a>
                 <a href="#mission" class="nav-link">Our Mission</a>
+                <a href="#live-map" class="nav-link">Live Map</a>
                 <a href="#take-action" class="nav-link">Take Action</a>
             </div>
         </div>
@@ -60,6 +61,7 @@
                     <button class="nav-btn active" data-target="home">Home</button>
                     <button class="nav-btn" data-target="about-team">About the Team</button>
                     <button class="nav-btn" data-target="mission">Our Mission</button>
+                    <button class="nav-btn" data-target="live-map">Live Map</button>
                     <button class="nav-btn" data-target="take-action">Take Action</button>
                 </div>
             </div>
@@ -104,6 +106,16 @@
                     resources remain vibrant and life-sustaining for generations to come.
                 </p>
             </div>
+        </section>
+
+        <!-- LIVE MAP PAGE -->
+        <section id="live-map" class="page-section">
+            <h2>Live Water Quality Map</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 1.5rem;">
+                Explore the water quality of our local waterways. Data is updated live from our community monitoring
+                efforts.
+            </p>
+            <div id="map-container"></div>
         </section>
 
         <!-- ABOUT TEAM PAGE -->
@@ -154,6 +166,9 @@
     </footer>
 
     <!-- Scripts -->
+    <!-- REPLACE 'YOUR_API_KEY' WITH YOUR ACTUAL GOOGLE MAPS API KEY -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUIuh6QiZorCIu1gi4Qj5giJGQH4w0wwU&callback=initMap"
+        defer></script>
     <script src="script.js"></script>
 </body>
 
