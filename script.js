@@ -95,15 +95,16 @@ window.initMap = function () {
         east: -75.1
     };
 
-    // Custom Map Style: White land, simplified features
+    // Custom Map Style: White land, emphasized borders
     const mapStyle = [
         {
             "elementType": "geometry",
             "stylers": [{ "color": "#ffffff" }]
         },
+        // Show labels (Revert: removed visibility: off for all labels)
         {
             "elementType": "labels.icon",
-            "stylers": [{ "visibility": "off" }]
+            "stylers": [{ "visibility": "off" }] // Keep icons hidden for cleanliness
         },
         {
             "elementType": "labels.text.fill",
@@ -112,6 +113,12 @@ window.initMap = function () {
         {
             "elementType": "labels.text.stroke",
             "stylers": [{ "color": "#f5f5f5" }]
+        },
+        // Outline State Borders (Virginia)
+        {
+            "featureType": "administrative.province",
+            "elementType": "geometry.stroke",
+            "stylers": [{ "color": "#9ca3af" }, { "weight": 2 }]
         },
         {
             "featureType": "administrative.land_parcel",
@@ -176,7 +183,7 @@ window.initMap = function () {
         {
             "featureType": "water",
             "elementType": "geometry",
-            "stylers": [{ "color": "#c9c9c9" }] // Default gray for unmonitored water
+            "stylers": [{ "color": "#c9c9c9" }]
         },
         {
             "featureType": "water",
@@ -186,15 +193,15 @@ window.initMap = function () {
     ];
 
     map = new google.maps.Map(document.getElementById("map-container"), {
-        zoom: 11,
-        center: northVa,
+        zoom: 8, // Zoomed out a bit to see more of Virginia
+        center: { lat: 37.5, lng: -78.5 }, // Centered on VA
         styles: mapStyle,
         mapTypeControl: false,
         streetViewControl: false,
         fullscreenControl: true,
         restriction: {
             latLngBounds: virginiaBounds,
-            strictBounds: false,
+            strictBounds: false, // Relaxed to allow seeing the "outline" better
         }
     });
 
