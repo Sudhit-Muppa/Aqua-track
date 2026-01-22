@@ -84,27 +84,32 @@ document.addEventListener('DOMContentLoaded', () => {
 let map;
 
 window.initMap = function () {
-    // Default to Northern Virginia view (Ashburn/Loudoun area)
-    const northVa = { lat: 39.0438, lng: -77.4874 };
+    // Center on the DMV Area (Shifted slightly west to include Loudoun)
+    const dmvCenter = { lat: 38.92, lng: -77.25 };
 
-    // Virginia Bounds (Approximate)
-    const virginiaBounds = {
-        north: 39.8,
-        south: 36.5,
-        west: -83.7,
-        east: -75.1
+    // DMV Area Bounds (Expanded west to include all of Loudoun County)
+    const dmvBounds = {
+        north: 39.6, // Extended slightly North for Lovettsville
+        south: 38.3, // South of Woodbridge
+        west: -78.1, // Extended West to cover Blue Ridge/Loudoun border
+        east: -76.4  // East of Annapolis
     };
 
-    // Custom Map Style: White land, emphasized borders
+    // Custom Map Style: White land, emphasized borders, NO ROADS
     const mapStyle = [
         {
             "elementType": "geometry",
             "stylers": [{ "color": "#ffffff" }]
         },
-        // Show labels (Revert: removed visibility: off for all labels)
+        // Hide ALL Roads
+        {
+            "featureType": "road",
+            "stylers": [{ "visibility": "off" }]
+        },
+        // Keep icons hidden for cleanliness
         {
             "elementType": "labels.icon",
-            "stylers": [{ "visibility": "off" }] // Keep icons hidden for cleanliness
+            "stylers": [{ "visibility": "off" }]
         },
         {
             "elementType": "labels.text.fill",
@@ -114,98 +119,161 @@ window.initMap = function () {
             "elementType": "labels.text.stroke",
             "stylers": [{ "color": "#f5f5f5" }]
         },
-        // Outline State Borders (Virginia)
+        // Outline Administrative Areas
         {
             "featureType": "administrative.province",
             "elementType": "geometry.stroke",
             "stylers": [{ "color": "#9ca3af" }, { "weight": 2 }]
         },
         {
-            "featureType": "administrative.land_parcel",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#bdbdbd" }]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#ffffff" }]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#757575" }]
-        },
-        {
-            "featureType": "poi.park",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#ffffff" }]
-        },
-        {
-            "featureType": "poi.park",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#9e9e9e" }]
-        },
-        {
-            "featureType": "road",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#ffffff" }]
-        },
-        {
-            "featureType": "road.arterial",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#757575" }]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#dadada" }]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#616161" }]
-        },
-        {
-            "featureType": "road.local",
-            "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#9e9e9e" }]
-        },
-        {
-            "featureType": "transit.line",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#e5e5e5" }]
-        },
-        {
-            "featureType": "transit.station",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#eeeeee" }]
+            "featureType": "water",
+            "elementType": "geometry.fill",
+            "stylers": [{ "color": "#ef4444" }] // Red Fill
         },
         {
             "featureType": "water",
-            "elementType": "geometry",
-            "stylers": [{ "color": "#c9c9c9" }]
+            "elementType": "geometry.stroke",
+            "stylers": [{ "color": "#22c55e" }, { "weight": 5 }] // Green Outline (Thicker)
         },
         {
             "featureType": "water",
             "elementType": "labels.text.fill",
-            "stylers": [{ "color": "#9e9e9e" }]
+            "stylers": [{ "color": "#7f1d1d" }]
         }
     ];
 
     map = new google.maps.Map(document.getElementById("map-container"), {
-        zoom: 8, // Zoomed out a bit to see more of Virginia
-        center: { lat: 37.5, lng: -78.5 }, // Centered on VA
+        zoom: 9, // Zoomed out slightly to fit Loudoun + DC
+        center: dmvCenter,
         styles: mapStyle,
         mapTypeControl: false,
         streetViewControl: false,
         fullscreenControl: true,
         restriction: {
-            latLngBounds: virginiaBounds,
-            strictBounds: false, // Relaxed to allow seeing the "outline" better
+            latLngBounds: dmvBounds,
+            strictBounds: false,
         }
     });
 
-    console.log("Map initialized successfully");
+    // Defined Rivers Data (Separated for Custom Coloring)
+    const rivers = [
+        {
+            name: "Potomac River",
+            color: "#22c55e", // Green (as requested previously)
+            path: [
+                { lat: 39.000, lng: -77.250 }, // Near Great Falls
+                { lat: 38.965, lng: -77.160 }, // Carderock
+                { lat: 38.935, lng: -77.120 }, // Little Falls
+                { lat: 38.905, lng: -77.065 }, // Georgetown
+                { lat: 38.892, lng: -77.055 }, // Roosevelt Island
+                { lat: 38.885, lng: -77.040 }, // Lincoln Memorial
+                { lat: 38.870, lng: -77.020 }, // Hains Point
+                { lat: 38.850, lng: -77.030 }, // National Airport
+                { lat: 38.800, lng: -77.045 }, // Alexandria
+                { lat: 38.710, lng: -77.040 }, // Mount Vernon
+                { lat: 38.600, lng: -77.150 }, // Widening south
+            ]
+        },
+        {
+            name: "Anacostia River",
+            color: "#3b82f6", // Blue
+            path: [
+                { lat: 38.940, lng: -76.930 }, // Bladensburg
+                { lat: 38.910, lng: -76.960 }, // Arboretum
+                { lat: 38.875, lng: -76.990 }, // Navy Yard
+                { lat: 38.865, lng: -77.015 }, // Buzzard Point
+                { lat: 38.855, lng: -77.020 }, // Merge Potomac
+            ]
+        },
+        {
+            name: "Goose Creek",
+            color: "#eab308", // Yellow (Loudoun)
+            path: [
+                { lat: 38.980, lng: -77.700 }, // Middleburg Area
+                { lat: 39.010, lng: -77.650 },
+                { lat: 39.030, lng: -77.600 }, // Oatlands
+                { lat: 39.050, lng: -77.550 },
+                { lat: 39.070, lng: -77.500 }, // Belmont
+                { lat: 39.085, lng: -77.460 }, // Merge Potomac
+            ]
+        },
+        {
+            name: "Occoquan River",
+            color: "#f97316", // Orange
+            path: [
+                { lat: 38.750, lng: -77.450 }, // Manassas
+                { lat: 38.720, lng: -77.380 },
+                { lat: 38.700, lng: -77.300 }, // Reservoir
+                { lat: 38.680, lng: -77.260 }, // Town
+                { lat: 38.650, lng: -77.220 }, // Merge Potomac
+            ]
+        },
+        {
+            name: "Monocacy River",
+            color: "#9333ea", // Purple
+            path: [
+                { lat: 39.710, lng: -77.220 }, // PA Border/Source
+                { lat: 39.600, lng: -77.250 }, // Thurmont
+                { lat: 39.420, lng: -77.400 }, // Frederick
+                { lat: 39.350, lng: -77.420 }, // Buckeystown
+                { lat: 39.220, lng: -77.450 }, // Merge Potomac
+            ]
+        },
+        {
+            name: "Bull Run",
+            color: "#db2777", // Pink
+            path: [
+                { lat: 38.940, lng: -77.650 }, // Source (Bull Run Mtns)
+                { lat: 38.880, lng: -77.550 }, // Manassas Battlefield
+                { lat: 38.820, lng: -77.450 }, // Manassas Park
+                { lat: 38.720, lng: -77.380 }, // Merge Occoquan
+            ]
+        },
+        {
+            name: "Broad Run",
+            color: "#14b8a6", // Teal
+            path: [
+                { lat: 38.980, lng: -77.580 }, // Arcola/Source area
+                { lat: 39.020, lng: -77.500 }, // Ashburn
+                { lat: 39.050, lng: -77.450 }, // Kincora
+                { lat: 39.070, lng: -77.440 }, // Merge Potomac
+            ]
+        },
+        {
+            name: "Difficult Run",
+            color: "#4f46e5", // Indigo
+            path: [
+                { lat: 38.880, lng: -77.320 }, // Oakton
+                { lat: 38.930, lng: -77.300 }, // Reston/Vienna border
+                { lat: 38.980, lng: -77.250 }, // Great Falls Park / Merge Potomac
+            ]
+        },
+        {
+            name: "Rock Creek",
+            color: "#06b6d4", // Cyan
+            path: [
+                { lat: 39.050, lng: -77.100 }, // Rockville/Derwood
+                { lat: 38.980, lng: -77.060 }, // Kensington
+                { lat: 38.940, lng: -77.050 }, // Rock Creek Park
+                { lat: 38.905, lng: -77.055 }, // Georgetown / Merge Potomac
+            ]
+        }
+    ];
+
+    // Render all river polylines
+    rivers.forEach(river => {
+        new google.maps.Polyline({
+            path: river.path,
+            geodesic: true,
+            strokeColor: river.color,
+            strokeOpacity: 0.9,
+            strokeWeight: 6, // Slightly thinner for smaller tributaries to show hierarchy
+            map: map,
+            title: river.name // Tooltip on hover
+        });
+    });
+
+    console.log("Map initialized successfully (DMV Focus + Many Separated Rivers)");
 }
 
 console.log("Aqua Track script loaded");
