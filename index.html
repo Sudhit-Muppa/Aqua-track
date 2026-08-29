@@ -3,291 +3,459 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aqua Track - Preserving Our Future</title>
-    <meta name="description" content="Tracking water quality and preserving aquatic ecosystems for future generations.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aqua Track — Measuring Loudoun's water, one reach at a time</title>
+    <meta name="description"
+        content="Six middle school students in Loudoun County, Virginia, built a water-quality probe and are sampling the ponds and Potomac tributaries nobody else tests.">
+    <meta name="theme-color" content="#0B1F2A">
 
-    <!-- Fonts -->
+    <meta property="og:title" content="Aqua Track">
+    <meta property="og:description"
+        content="Six middle school students measuring the water quality of Loudoun County's ponds and streams.">
+    <meta property="og:type" content="website">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap"
+        rel="stylesheet">
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <a class="skip-link" href="#mission">Skip to content</a>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo nav-link-trigger">
-                <i class="fa-solid fa-water"></i>
-                Aqua<span>Track</span>
+    <!-- ── Masthead ─────────────────────────────────────────────── -->
+    <header class="masthead">
+        <div class="masthead__inner">
+            <a class="wordmark" href="#top" aria-label="Aqua Track, back to top">
+                <svg class="wordmark__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
+                    <path d="M5.6 16.2h12.8" />
+                </svg>
+                <span class="wordmark__text">Aqua<em>Track</em></span>
             </a>
 
-            <button class="mobile-toggle">
-                <i class="fa-solid fa-bars"></i>
+            <button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">
+                <span class="menu-toggle__label">Menu</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M4 7h16M4 12h16M4 17h16" />
+                </svg>
             </button>
 
-            <div class="nav-links">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="#about-team" class="nav-link">About the Team</a>
-                <a href="#mission" class="nav-link">Our Mission</a>
-                <a href="#current-events" class="nav-link">Current Events</a>
-                <a href="#live-map" class="nav-link">Pollution Map</a>
-                <a href="#take-action" class="nav-link">Take Action</a>
+            <nav class="nav" id="primary-nav" aria-label="Sections">
+                <a href="#mission">Mission</a>
+                <a href="#probe">Probe</a>
+                <a href="#map">Map</a>
+                <a href="#log">Log</a>
+                <a href="#team">Team</a>
+                <a href="#act" class="nav__cta">Take action</a>
+            </nav>
+        </div>
+        <div class="progress" role="presentation"><span class="progress__bar"></span></div>
+    </header>
+
+    <!-- ── Hero ─────────────────────────────────────────────────── -->
+    <section class="hero" id="top">
+        <canvas class="hero__canvas" aria-hidden="true"></canvas>
+        <div class="hero__body">
+            <p class="dateline">Loudoun County, Virginia &middot; 39.05&deg;N 77.49&deg;W &middot; Step Up Loudoun
+                Youth</p>
+            <h1 class="hero__title">The Potomac gets tested. The pond behind your neighborhood <span
+                    class="hero__title-accent">doesn't.</span></h1>
+            <p class="hero__lede">We are six middle school students. We built a probe that reads the water, and we are
+                taking it to the ponds and creeks that never make it into anyone's dataset.</p>
+            <div class="hero__actions">
+                <a class="btn btn--solid" href="#probe">Try the probe
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a class="btn btn--ghost" href="#mission">Why we started</a>
             </div>
         </div>
-    </nav>
+        <p class="hero__scroll" aria-hidden="true">Scroll</p>
+    </section>
 
-    <!-- Main Content -->
     <main>
 
-        <!-- HOME PAGE -->
-        <section id="home" class="page-section active">
-            <div class="hero">
-                <h1>Join the Movement</h1>
-                <p>We aim to take part in removing pollution from lakes, rivers, and smaller waterways in the DMV
-                    through our awareness and innovation. Join us in making an impact in our community.</p>
-                <p>We are Aqua Track, and we are here to teach local communities about the real issues quickly arising
-                    issues with water pollution around us. We are a young group of middle school students who have
-                    noticed the issues with ponds in our local areas. Our group consists of Sreehan Bheemreddy, Sudhit
-                    Muppa, Pratheek Kumar, Ved Ayyagari, Yug Jindal, and Nihal Sripathi. Each of us has an extensive
-                    background consisting of leadership and engineering opportunities. Together, we have realized the
-                    issues with pollution in not only large river systems but also the pollution in our local ponds that
-                    can affect our day-to-day quality of life. Follow us on our journey as we focus on creating
-                    algorithms and machines that can help us evaluate the pollution levels of our local ponds. Let's
-                    promote general welfare together.</p>
-                <p>We are AquaTrack, and we aim to spread awareness throughout the DMV and teach the upcoming and
-                    current generations about the natural issues of water pollution arising around us. We are a group of
-                    middle school students, motivated to address the issues with the waterways that treat us. Our group
-                    consists of Sreehan Bheemreddy, Sudhit Muppa, Pratheek Kumar, Ved Ayyagari, Yug Jindal, and Nihal
-                    Sripathi. Each of us has an extensive background consisting of leadership and engineering
-                    opportunities. Together, we observed the issues with pollution in not only large river systems but
-                    also the pollution in our local ponds that can affect our day-to-day quality of life. Follow us on
-                    our journey as we focus on creating algorithms and machines that can help us evaluate the pollution
-                    levels of our local ponds. Let's promote general welfare together. Look at the <a href="#mission"
-                        style="color: var(--primary-color);">Our Mission</a> page for more about our project.</p>
+        <!-- ── Mission ──────────────────────────────────────────── -->
+        <section class="band" id="mission">
+            <div class="wrap">
+                <header class="sec-head">
+                    <p class="eyebrow">Why we started</p>
+                    <h2>Pollution in Loudoun happens every day, and most of it is never measured.</h2>
+                </header>
 
-                <a href="#take-action" class="text-link nav-link-trigger">Join the Movement <i
-                        class="fa-solid fa-arrow-right"></i></a>
+                <div class="prose">
+                    <p class="prose__lead">Solving this will take longer than we have. We think it still starts the
+                        same way: pick a body of water, measure it honestly, write down what you found, and do it
+                        again next month.</p>
 
-                <!-- Navigation Buttons -->
-                <div class="hero-nav-buttons">
-                    <button class="nav-btn active" data-target="home">Home</button>
-                    <button class="nav-btn" data-target="about-team">About the Team</button>
-                    <button class="nav-btn" data-target="mission">Our Mission</button>
-                    <button class="nav-btn" data-target="current-events">Current Events</button>
-                    <button class="nav-btn" data-target="live-map">Pollution Map</button>
-                    <button class="nav-btn" data-target="take-action">Take Action</button>
-                </div>
-            </div>
+                    <p>Last year a 64-year-old Virginia man was wading in shallow brackish water near Virginia Beach
+                        with a small cut on his leg. The wound was exposed to <em>Vibrio vulnificus</em>, a bacterium
+                        that occurs naturally in warm, salty and brackish water, including near the Chesapeake Bay
+                        and the Potomac. He died. Most people have never heard of Vibrio, and cases like this are
+                        rare — but they are the sharp end of something ordinary. Urban runoff kills aquatic life,
+                        pushes fish past the point where they are safe to eat, and knocks the balance of a waterway
+                        out of order. It happens because dumping runoff is cheaper than treating it. Stretches of the
+                        Potomac are unsafe to swim in today, between the algal blooms, the runoff, and the bacteria
+                        that come with them.</p>
 
-            <div class="grid">
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-                    <h3>Local Focus</h3>
-                    <p>Targeting key waterways in the DMV area for immediate cleanup.</p>
+                    <p>Our own start was smaller. One of us, Sudhit, went fishing on rivers near the Potomac and came
+                        home with nothing — algae, plastic bags, bottles. He complained to a friend who had been to a
+                        different spot and seen exactly the same thing. So we gathered a few more people and started
+                        the Aqua Track Project. The more we read about the water in Loudoun County, the clearer it
+                        got: stable freshwater ecosystems here are the exception, not the rule. That became the whole
+                        focus.</p>
                 </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-trash-can-arrow-up"></i></div>
-                    <h3>Pollution Removal</h3>
-                    <p>Physically removing waste from our lakes and rivers.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-droplet"></i></div>
-                    <h3>Cleaner Future</h3>
-                    <p>Ensuring safe and beautiful water resources for our community to enjoy.</p>
+
+                <div class="plan">
+                    <article class="plan__item">
+                        <p class="plan__tag">Built</p>
+                        <h3>A probe, not an opinion</h3>
+                        <p>An ESP32 rig that reads the parameters we care about and condenses them into a
+                            two-sentence report on the water it just sampled. Bench-tested on tap water first, so we
+                            know what a clean baseline looks like.</p>
+                    </article>
+                    <article class="plan__item">
+                        <p class="plan__tag">In progress</p>
+                        <h3>Walk the reaches</h3>
+                        <p>Carry the probe to access points along the Potomac and its Loudoun tributaries, plus the
+                            neighborhood ponds nobody samples, and log every reading with its location.</p>
+                    </article>
+                    <article class="plan__item">
+                        <p class="plan__tag">Next</p>
+                        <h3>Publish the map</h3>
+                        <p>Put every reading on a public map under one color-coded index, so a neighbor can see how
+                            the water near them is doing without reading a technical report.</p>
+                    </article>
+                    <article class="plan__item">
+                        <p class="plan__tag">Long run</p>
+                        <h3>Be the boring part</h3>
+                        <p>A county with more stable freshwater than it has now, and a record consistent enough that
+                            whoever comes after us can pick it up and keep going.</p>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- CURRENT EVENTS PAGE -->
-        <section id="current-events" class="page-section">
-            <h2>Current Events</h2>
-            <div class="text-content">
-                <!-- Content will be added here -->
-            </div>
-        </section>
+        <!-- ── Field probe (interactive) ────────────────────────── -->
+        <section class="band band--ink" id="probe">
+            <div class="wrap">
+                <header class="sec-head sec-head--invert">
+                    <p class="eyebrow">Interactive &middot; demonstration model</p>
+                    <h2>Read the water yourself.</h2>
+                    <p class="sec-head__sub">Move the sliders to the conditions you want to test. The column responds
+                        the way the real thing would, and the panel writes the same kind of two-sentence report our
+                        probe produces in the field.</p>
+                </header>
 
-        <!-- OUR MISSION PAGE -->
-        <section id="mission" class="page-section">
-            <h2>Our Mission – Saving Loudoun’s Waters</h2>
-            <div class="text-content">
-                <h3 class="highlight-text" style="margin-bottom: 3rem; color: var(--primary-color); font-weight: 800;">
-                    Saving Loudoun’s Waters</h3>
-                <p>
-                    Pollution in Loudoun County occurs every day. While we understand that solving this problem will
-                    take time, we believe meaningful change starts with small, consistent steps. Our plan focuses on
-                    both large river systems and smaller freshwater ecosystems, ensuring long-term environmental
-                    improvement.
-                </p>
-                <p>
-                    Keep reading to learn about our detailed plan for protecting Loudoun County’s waterways.
-                </p>
+                <div class="probe">
+                    <!-- Column -->
+                    <figure class="probe__column">
+                        <canvas class="probe__canvas" width="360" height="620"
+                            aria-label="Animated water column. Clarity, colour and bubble activity reflect the current sensor values."
+                            role="img"></canvas>
+                        <ul class="probe__depths" aria-hidden="true">
+                            <li>0.0 m</li>
+                            <li>0.5 m</li>
+                            <li>1.0 m</li>
+                            <li>1.5 m</li>
+                        </ul>
+                        <figcaption class="probe__caption">Sample column &middot; 1.5 m</figcaption>
+                    </figure>
 
-                <h3 class="highlight-text" style="margin-bottom: 3rem; color: var(--primary-color); font-weight: 800;">
-                    Why Are We Doing This?</h3>
-                <p>
-                    Last year, a 64-year-old man from Virginia was wading in shallow coastal brackish water near
-                    Virginia Beach with a small cut or open wound on his leg. While in the water, this wound got exposed
-                    to Vibrio Vulnificus, a naturally occurring bacterium found in warm, salty and brackish waters,
-                    including areas near the Chesapeake Bay and Potomac River. I bet you did not even know what Vibrio
-                    was, let alone this case of death. Though these deaths are rare, people can get extremely ill, and
-                    it's our job to make you aware of that. Urban runoff kills marine life, causing fish to be too toxic
-                    for consumption and disturbing the balance in biodiversity. This happens because careless
-                    corporations dump runoff as a cheaper alternative to a more bio-friendly solution. Currently, the
-                    Potomac River is too toxic to swim in because of the extreme pollution that affects this major
-                    waterway. It is too risky in a lot of areas, from the algal blooms, urban runoffs and bacterial
-                    issues.
-                </p>
-                <p>
-                    So, they decided to gather a couple more friends and started The Aqua Track Project. Later on, after
-                    researching the quality of our rivers, we realized how polluted they were and how stable water
-                    ecosystems rarely existed in Loudoun County waters. After reading this, we decided that this is our
-                    main focus. Thus, we began our journey to create a better environment.
-                </p>
-                <p>
-                    We have entered the Step Up Loudoun Competition as a beginning step for our journey.
-                    We first started when one of our members, Sudhit, went fishing in various rivers near the Potomac.
-                    He was extremely disappointed, as he saw no result. All he saw were algae, plastic, and plastic
-                    bottles. This really disturbed him. Then he complained to his friend, who also had the same
-                    experience.
-                </p>
+                    <!-- Controls + readout -->
+                    <div class="probe__panel">
+                        <div class="probe__presets">
+                            <p class="probe__presets-label" id="preset-label">Load a sample</p>
+                            <div class="chips" role="group" aria-labelledby="preset-label">
+                                <button type="button" class="chip" data-preset="tap" aria-pressed="false">Tap
+                                    water</button>
+                                <button type="button" class="chip" data-preset="pond" aria-pressed="false">Healthy
+                                    pond</button>
+                                <button type="button" class="chip" data-preset="bloom" aria-pressed="false">Algal
+                                    bloom</button>
+                                <button type="button" class="chip" data-preset="salt" aria-pressed="false">Winter road
+                                    salt</button>
+                                <button type="button" class="chip" data-preset="runoff" aria-pressed="false">Storm
+                                    runoff</button>
+                            </div>
+                        </div>
 
-                <h3 class="highlight-text" style="margin-bottom: 3rem; color: var(--primary-color); font-weight: 800;">
-                    Our Main Plan: Year One</h3>
-                <p>
-                    So, what's our plan? First, we finished our research and created a contraption using an
-                    <strong>ESP32</strong> that measures parameters for water quality that we are using. This system,
-                    after testing with tap water, sends us a two-sentence-long report describing the quality. With this
-                    contraption made, we are going around the Potomac area to test waters around that area. After we
-                    compile these findings, we add them to a map that we are going to feature on our website, called the
-                    pollution map. It is our way of visualizing these findings using a color-coded system we have
-                    constructed. The next part of the plan for year one is to compete in the Step Up Loudoun Competition
-                    to gain recognition from around the county to help us promote our goal. For this part, we decided to
-                    start using social media to convey our overall message.
-                </p>
-
-                <h3 class="highlight-text" style="margin-bottom: 3rem; color: var(--primary-color); font-weight: 800;">
-                    Future</h3>
-                <p>
-                    How we see it is that we want the future to be a place with more stable freshwater ecosystems. We
-                    hope to be a crucial stepping stone for this goal and to become an inspiration to many others who
-                    come around to try to help save water ecosystems. Maybe in 100 years, the water ecosystem could be
-                    better.
-                </p>
-            </div>
-        </section>
-
-        <!-- LIVE MAP PAGE -->
-        <section id="live-map" class="page-section">
-            <h2>Pollution Map <span style="font-size: 0.6em; color: var(--accent-color); vertical-align: middle;">(Work
-                    in
-                    Progress)</span></h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto 1.5rem;">
-                We are actively testing rivers and ponds around Virginia to show the most polluted areas and provide
-                accurate ratings of the water quality. This map will be updated frequently with our latest findings
-                (Due to winter weather we are currently experiencing, the map will be delayed)
-            </p>
-            <div style="position: relative;">
-                <div id="map-container"></div>
-                <!-- Map Key Overlay -->
-                <div id="map-legend">
-                    <h3>Key</h3>
-                    <div class="legend-item">
-                        <span class="color-box water"></span> Waterways
+                        <div class="sliders">
+                            <div class="slider" data-key="ph">
+                                <label for="s-ph">pH</label>
+                                <output for="s-ph" id="o-ph">7.2</output>
+                                <input type="range" id="s-ph" min="4" max="11" step="0.1" value="7.2">
+                                <p class="slider__scale"><span>4 acidic</span><span>11 alkaline</span></p>
+                            </div>
+                            <div class="slider" data-key="oxygen">
+                                <label for="s-oxygen">Dissolved oxygen</label>
+                                <output for="s-oxygen" id="o-oxygen">9.0 mg/L</output>
+                                <input type="range" id="s-oxygen" min="0" max="14" step="0.1" value="9">
+                                <p class="slider__scale"><span>0 suffocating</span><span>14 saturated</span></p>
+                            </div>
+                            <div class="slider" data-key="turbidity">
+                                <label for="s-turbidity">Turbidity</label>
+                                <output for="s-turbidity" id="o-turbidity">6 NTU</output>
+                                <input type="range" id="s-turbidity" min="0" max="200" step="1" value="6">
+                                <p class="slider__scale"><span>0 clear</span><span>200 opaque</span></p>
+                            </div>
+                            <div class="slider" data-key="temp">
+                                <label for="s-temp">Temperature</label>
+                                <output for="s-temp" id="o-temp">16 &deg;C</output>
+                                <input type="range" id="s-temp" min="0" max="35" step="0.5" value="16">
+                                <p class="slider__scale"><span>0 &deg;C</span><span>35 &deg;C</span></p>
+                            </div>
+                            <div class="slider" data-key="conductivity">
+                                <label for="s-conductivity">Conductivity</label>
+                                <output for="s-conductivity" id="o-conductivity">260 &micro;S/cm</output>
+                                <input type="range" id="s-conductivity" min="20" max="3000" step="10" value="260">
+                                <p class="slider__scale"><span>20 pure</span><span>3000 saline</span></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="legend-item">
-                        <span class="color-box land"></span> Land
+
+                    <!-- Verdict -->
+                    <div class="probe__readout">
+                        <div class="readout__score">
+                            <p class="readout__label">Water quality index</p>
+                            <p class="readout__value"><span class="readout__num">86</span><span
+                                    class="readout__den">/100</span></p>
+                            <p class="readout__grade">Good</p>
+                        </div>
+                        <div class="readout__meter" aria-hidden="true">
+                            <span class="readout__needle"></span>
+                        </div>
+                        <p class="readout__scale" aria-hidden="true">
+                            <span>Impaired</span><span>Poor</span><span>Fair</span><span>Good</span>
+                        </p>
+                        <div class="readout__report" role="status" aria-live="polite">
+                            <p class="readout__report-label">Probe report</p>
+                            <p class="readout__report-text">Water quality reads Good at 86 out of 100. Every parameter
+                                sits inside the healthy range for a freshwater pond.</p>
+                        </div>
+                        <p class="readout__note">This panel runs a simplified index built for the web, using the same
+                            five parameters the probe reads. It is here to show how the scoring works — it is not a
+                            live feed from a sensor.</p>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Work in Progress Overlay -->
-                <div class="map-overlay">
-                    <h3>Work in Progress</h3>
+        <!-- ── Watershed map ────────────────────────────────────── -->
+        <section class="band" id="map">
+            <div class="wrap">
+                <header class="sec-head">
+                    <p class="eyebrow">Survey chart &middot; sampling not yet begun</p>
+                    <h2>The reaches we are walking.</h2>
+                    <p class="sec-head__sub">Nine reaches across the Potomac basin, drawn from our own route
+                        planning. Select one to see what we intend to sample there. Field work is paused for winter —
+                        when it restarts, each reach fills in with its measured grade.</p>
+                </header>
+
+                <div class="chart">
+                    <div class="chart__stage">
+                        <svg class="chart__svg" viewBox="0 0 1000 700" role="img"
+                            aria-label="Chart of nine river reaches in the Potomac basin across Loudoun County, Washington DC and nearby Maryland.">
+                            <g class="chart__graticule"></g>
+                            <g class="chart__rivers"></g>
+                            <g class="chart__places"></g>
+                        </svg>
+                    </div>
+
+                    <aside class="chart__panel" aria-live="polite">
+                        <p class="chart__panel-eyebrow">Selected reach</p>
+                        <h3 class="chart__panel-title">Pick a reach</h3>
+                        <p class="chart__panel-body">Every line on this chart is water we can reach on foot or by
+                            bike. Choose one to see its watershed, length and sampling status.</p>
+                        <dl class="chart__stats"></dl>
+                        <p class="chart__status">
+                            <span class="dot dot--pending" aria-hidden="true"></span>
+                            <span class="chart__status-text">No readings published yet</span>
+                        </p>
+                    </aside>
+                </div>
+
+                <div class="legend">
+                    <p class="legend__label">Index the map will use</p>
+                    <ul class="legend__items">
+                        <li><span class="swatch swatch--good" aria-hidden="true"></span>Good &middot; 80&ndash;100</li>
+                        <li><span class="swatch swatch--fair" aria-hidden="true"></span>Fair &middot; 60&ndash;79</li>
+                        <li><span class="swatch swatch--poor" aria-hidden="true"></span>Poor &middot; 40&ndash;59</li>
+                        <li><span class="swatch swatch--bad" aria-hidden="true"></span>Impaired &middot; below 40</li>
+                        <li><span class="swatch swatch--pending" aria-hidden="true"></span>Not yet sampled</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- ABOUT TEAM PAGE -->
-        <section id="about-team" class="page-section">
-            <h2>About Us – Who We Are</h2>
-            <div class="text-content">
-                <p>
-                    We are AquaTrack, a group of motivated middle school students dedicated to raising awareness about
-                    the growing issue of water pollution around us.
-                </p>
-                <p>
-                    Our team consists of Sreehan Bheemreddy, Sudhit Muppa, Pratheek Kumar, Ved Ayyagari, Yug Jindal, and
-                    Nihal Sripathi. Each of us brings leadership experience and a strong interest in engineering and
-                    problem-solving.
-                </p>
-                <p>
-                    We have seen firsthand how pollution affects not only major river systems, but also the ponds and
-                    small waterways in our own neighborhoods. These local ecosystems directly impact our daily lives,
-                    from recreation to environmental health.
-                </p>
-                <p>
-                    Follow our journey as we design algorithms and build machines to evaluate pollution levels in local
-                    ponds and waterways. Together, we can promote the general welfare of our community.
-                    For more details, visit our <a href="#mission" style="color: var(--primary-color);">Our Mission</a>
-                    page.
-                </p>
+        <!-- ── Project log ──────────────────────────────────────── -->
+        <section class="band band--tint" id="log">
+            <div class="wrap">
+                <header class="sec-head">
+                    <p class="eyebrow">Project log</p>
+                    <h2>Where the work actually stands.</h2>
+                    <p class="sec-head__sub">Updated as things move. Anything filed under Next or Later is planned,
+                        not finished — we would rather say so than pad the list.</p>
+                </header>
+
+                <ol class="log">
+                    <li class="log__phase">
+                        <p class="log__tag log__tag--now">Now</p>
+                        <ul class="log__items">
+                            <li>
+                                <h3>Probe v1 is reading</h3>
+                                <p>The ESP32 rig is assembled and bench-tested on tap water. It takes its parameter
+                                    readings and writes a two-sentence summary of the sample.</p>
+                            </li>
+                            <li>
+                                <h3>Entered Step Up Loudoun Youth</h3>
+                                <p>The competition is our starting line, not the finish. It gets the project in front
+                                    of the county so the map has an audience when it goes up.</p>
+                            </li>
+                            <li>
+                                <h3>Field sampling paused for winter</h3>
+                                <p>Cold weather is keeping us off the water, which is why the map is still empty. It
+                                    fills in as soon as we are back out.</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="log__phase">
+                        <p class="log__tag log__tag--next">Next</p>
+                        <ul class="log__items">
+                            <li>
+                                <h3>First reaches sampled</h3>
+                                <p>Goose Creek, Broad Run and Difficult Run, plus the neighborhood ponds around
+                                    Ashburn and Leesburg — the small water that never gets a data point.</p>
+                            </li>
+                            <li>
+                                <h3>Readings go on the map</h3>
+                                <p>Each sampled reach gets its grade and the date it was taken, under the same
+                                    color-coded index shown above.</p>
+                            </li>
+                            <li>
+                                <h3>Field updates on Instagram</h3>
+                                <p>Short posts from each sampling trip, so following along does not require checking
+                                    the site.</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="log__phase">
+                        <p class="log__tag log__tag--later">Later</p>
+                        <ul class="log__items">
+                            <li>
+                                <h3>A county-wide picture</h3>
+                                <p>Enough repeat readings across Loudoun that the map shows change over time, not
+                                    just one afternoon's snapshot.</p>
+                            </li>
+                            <li>
+                                <h3>Something worth handing off</h3>
+                                <p>A record and a method consistent enough that the next group of students can pick
+                                    it up without starting over.</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
             </div>
         </section>
 
-        <!-- TAKE ACTION PAGE -->
-        <section id="take-action" class="page-section">
-            <h2>Take Action</h2>
-            <div class="text-content">
-                <h3 class="highlight-text" style="margin-bottom: 3rem; color: var(--primary-color); font-weight: 800;">
-                    What You Can Do</h3>
-                <p>
-                    As the Aqua Track Project moves forward and continues to implement our plan, we understand that,
-                    realistically, it would be impossible for only a group of six scholars to fix all of the freshwater
-                    ecosystems in Loudoun County, let alone the entirety of Virginia. That is why we need YOU to take
-                    action for your community. One small step you can take to help us is to follow us on this journey.
-                    You can check our website for updates on the polluted areas, you can change your habits to prevent
-                    harmful runoff, and you can support us on social media to help raise awareness of the cause.
-                </p>
+        <!-- ── Team ─────────────────────────────────────────────── -->
+        <section class="band" id="team">
+            <div class="wrap">
+                <header class="sec-head">
+                    <p class="eyebrow">Six students &middot; Loudoun County</p>
+                    <h2>Who is doing this.</h2>
+                    <p class="sec-head__sub">We are middle school students with backgrounds in leadership and
+                        engineering, and a shared irritation about what our local water looks like up close. Nobody is
+                        paying us and nobody assigned this.</p>
+                </header>
 
-                <h3 class="highlight-text" style="margin-bottom: 3rem; color: var(--primary-color); font-weight: 800;">
-                    Why Should You Do It?</h3>
-                <p>
-                    There are multiple reasons to try preventing harmful runoff. First, it helps the overall health of
-                    the water, giving us healthy water to drink and use, which is beneficial to us. Next, it helps the
-                    health of the organisms in the water. Water containing harmful chemicals can kill wildlife in rivers
-                    and oceans. Lastly, all sources of pollution that end up in the ocean start with pollution in
-                    rivers. This pollution slowly makes its way to major rivers and then to larger bodies of water until
-                    it reaches the ocean. This, again, causes the health of the water and wildlife to be impacted. So,
-                    cutting off the source of pollution can save the water and the organisms within.
-                </p>
+                <ul class="roster">
+                    <li><span class="roster__mark" aria-hidden="true">SB</span>Sreehan Bheemreddy</li>
+                    <li><span class="roster__mark" aria-hidden="true">SM</span>Sudhit Muppa</li>
+                    <li><span class="roster__mark" aria-hidden="true">PK</span>Pratheek Kumar</li>
+                    <li><span class="roster__mark" aria-hidden="true">VA</span>Ved Ayyagari</li>
+                    <li><span class="roster__mark" aria-hidden="true">YJ</span>Yug Jindal</li>
+                    <li><span class="roster__mark" aria-hidden="true">NS</span>Nihal Sripathi</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ── Take action ──────────────────────────────────────── -->
+        <section class="band band--ink" id="act">
+            <div class="wrap">
+                <header class="sec-head sec-head--invert">
+                    <p class="eyebrow">Take action</p>
+                    <h2>Six people cannot fix a county's water.</h2>
+                    <p class="sec-head__sub">That is not modesty, it is arithmetic. What actually moves the number is
+                        what happens on the ground upstream of every reach on that chart — driveways, lawns, storm
+                        drains. Most of it is small and most of it is free.</p>
+                </header>
+
+                <div class="actions">
+                    <article class="action">
+                        <h3>Keep it out of the storm drain</h3>
+                        <p>A storm drain is not a sink. Whatever goes down it — paint, oil, soapy car-wash water,
+                            grass clippings — arrives in a creek untreated, usually within the hour.</p>
+                    </article>
+                    <article class="action">
+                        <h3>Sweep, don't hose</h3>
+                        <p>Fertilizer and grass clippings on a driveway wash straight into the nearest waterway and
+                            feed the algal blooms that pull the oxygen out. Sweep them back onto the grass instead.</p>
+                    </article>
+                    <article class="action">
+                        <h3>Go lighter on the salt</h3>
+                        <p>Road and driveway salt spikes conductivity in winter and does not break down. A thin,
+                            deliberate spread clears ice about as well as a thick one.</p>
+                    </article>
+                    <article class="action">
+                        <h3>Pick up after your dog</h3>
+                        <p>Pet waste left near a pond is a direct bacterial load on the water. It is the single
+                            easiest input on this list to remove.</p>
+                    </article>
+                </div>
+
+                <div class="cta">
+                    <p class="cta__text">The other thing that helps is attention. Follow the sampling, check the map
+                        when it fills in, and tell someone upstream of you about it.</p>
+                    <div class="cta__links">
+                        <a class="btn btn--solid" href="https://www.instagram.com/theaquatrackproject/" target="_blank"
+                            rel="noopener">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <rect x="2" y="2" width="20" height="20" rx="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <path d="M17.5 6.5h.01" />
+                            </svg>
+                            Follow the field work
+                        </a>
+                        <a class="btn btn--ghost" href="mailto:theaquatrackinitiative@gmail.com">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                            Email the team
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="social-links">
-            <a href="https://www.instagram.com/theaquatrackproject/" target="_blank" aria-label="Instagram"><i
-                    class="fa-brands fa-instagram"></i></a>
-            <a href="mailto:theaquatrackinitiative@gmail.com" aria-label="Email"><i
-                    class="fa-solid fa-envelope"></i></a>
+    <footer class="footer">
+        <div class="wrap footer__inner">
+            <p class="footer__mark">Aqua<em>Track</em></p>
+            <p class="footer__meta">A student project from Loudoun County, Virginia. Entered in Step Up Loudoun
+                Youth.</p>
+            <p class="footer__meta footer__meta--dim">&copy; 2025 Aqua Track</p>
         </div>
-        <p>&copy; 2025 Aqua Track. All rights reserved.</p>
     </footer>
 
-    <!-- Scripts -->
-    <!-- REPLACE 'YOUR_API_KEY' WITH YOUR ACTUAL GOOGLE MAPS API KEY -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUIuh6QiZorCIu1gi4Qj5giJGQH4w0wwU&callback=initMap"
-        defer></script>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>
