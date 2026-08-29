@@ -20,6 +20,10 @@
         href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap"
         rel="stylesheet">
 
+    <!-- Leaflet — open-source map library, no API key -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -258,19 +262,24 @@
                 </header>
 
                 <div class="chart">
-                    <div class="chart__stage">
-                        <svg class="chart__svg" viewBox="0 0 1000 700" role="img"
-                            aria-label="Chart of nine river reaches in the Potomac basin across Loudoun County, Washington DC and nearby Maryland.">
-                            <g class="chart__graticule"></g>
-                            <g class="chart__rivers"></g>
-                            <g class="chart__places"></g>
-                        </svg>
+                    <div class="chart__col">
+                        <div class="chart__stage">
+                            <div id="watershed-map" role="img"
+                                aria-label="Map of the Potomac basin across the DMV, centered on Loudoun County, showing nine river reaches."></div>
+                            <button type="button" class="map-activate">
+                                <span>Click to explore the map</span>
+                            </button>
+                        </div>
+                        <div class="chart__jump">
+                            <label for="reach-select">Jump to a reach</label>
+                            <select id="reach-select"></select>
+                        </div>
                     </div>
 
                     <aside class="chart__panel" aria-live="polite">
                         <p class="chart__panel-eyebrow">Selected reach</p>
                         <h3 class="chart__panel-title">Pick a reach</h3>
-                        <p class="chart__panel-body">Every line on this chart is water we can reach on foot or by
+                        <p class="chart__panel-body">Every line on this map is water we can reach on foot or by
                             bike. Choose one to see its watershed, length and sampling status.</p>
                         <dl class="chart__stats"></dl>
                         <p class="chart__status">
@@ -455,6 +464,9 @@
         </div>
     </footer>
 
+    <!-- Leaflet — open-source map library, no API key -->
+    <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="script.js" defer></script>
 </body>
 

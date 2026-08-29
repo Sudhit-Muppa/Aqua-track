@@ -486,149 +486,99 @@
         }
     ];
 
+    // A few Loudoun towns central to the project. Everything else on the
+    // map — DC, Rockville, Alexandria, road/place context — comes from the
+    // OSM basemap itself, so we don't duplicate its own labels.
     var PLACES = [
         { name: 'Leesburg', lat: 39.115, lng: -77.564 },
         { name: 'Ashburn', lat: 39.043, lng: -77.487 },
-        { name: 'Middleburg', lat: 38.968, lng: -77.736 },
-        { name: 'Rockville', lat: 39.084, lng: -77.153 },
-        { name: 'Washington', lat: 38.907, lng: -77.037 },
-        { name: 'Alexandria', lat: 38.805, lng: -77.047 },
-        { name: 'Manassas', lat: 38.751, lng: -77.475 },
-        { name: 'Frederick', lat: 39.414, lng: -77.411 }
+        { name: 'Middleburg', lat: 38.968, lng: -77.736 }
     ];
 
-    function reachLengthKm(pts) {
-        var total = 0;
-        for (var i = 1; i < pts.length; i++) {
-            var lat1 = pts[i - 1][0] * Math.PI / 180, lat2 = pts[i][0] * Math.PI / 180;
-            var dLat = lat2 - lat1;
-            var dLng = (pts[i][1] - pts[i - 1][1]) * Math.PI / 180;
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
-            total += 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        }
-        return total;
-    }
-
-    // Catmull-Rom through the waypoints, so a reach reads as a river
-    // rather than a survey traverse.
-    function smoothPath(pts) {
-        if (pts.length < 3) return 'M' + pts.map(function (p) { return p[0] + ',' + p[1]; }).join('L');
-        var d = 'M' + pts[0][0] + ',' + pts[0][1];
-        for (var i = 0; i < pts.length - 1; i++) {
-            var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
-            d += 'C' + (p1[0] + (p2[0] - p0[0]) / 6) + ',' + (p1[1] + (p2[1] - p0[1]) / 6) +
-                ' ' + (p2[0] - (p3[0] - p1[0]) / 6) + ',' + (p2[1] - (p3[1] - p1[1]) / 6) +
-                ' ' + p2[0] + ',' + p2[1];
-        }
-        return d;
-    }
+    var DMV_BOUNDS = [[38.3, -78.1], [39.6, -76.4]];
+    var DMV_CENTER = [38.92, -77.25];
 
     function initChart() {
-        var svg = $('.chart__svg');
-        if (!svg) return;
+        var container = document.getElementById('watershed-map');
+        if (!container || typeof L === 'undefined') return;
 
-        var gGrat = $('.chart__graticule', svg);
-        var gRivers = $('.chart__rivers', svg);
-        var gPlaces = $('.chart__places', svg);
+        var bounds = L.latLngBounds(DMV_BOUNDS);
+        var map = L.map(container, {
+            center: DMV_CENTER,
+            zoom: 9,
+            minZoom: 8,
+            maxZoom: 15,
+            maxBounds: bounds.pad(0.05),
+            maxBoundsViscosity: 1,
+            dragging: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            touchZoom: false,
+            tap: false
+        });
+
+        // The official OpenStreetMap tile server — free forever, no
+        // account or API key. In exchange it asks for light traffic and
+        // visible attribution, both of which fit a small project site.
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            subdomains: 'abc',
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
+
+        // Gate interaction behind an explicit click/tap so the map never
+        // steals page scroll or a touch swipe from someone just reading.
+        var gate = $('.map-activate', container.parentElement);
+        function activate() {
+            map.dragging.enable();
+            map.scrollWheelZoom.enable();
+            map.doubleClickZoom.enable();
+            map.touchZoom.enable();
+            map.tap && map.tap.enable();
+            if (gate) gate.classList.add('is-hidden');
+        }
+        if (gate) {
+            gate.addEventListener('click', activate);
+        } else {
+            activate();
+        }
+
         var panelTitle = $('.chart__panel-title');
         var panelBody = $('.chart__panel-body');
         var panelStats = $('.chart__stats');
         var statusText = $('.chart__status-text');
+        var picker = document.getElementById('reach-select');
 
-        // Bounds over every waypoint and place label
-        var lats = [], lngs = [];
-        REACHES.forEach(function (r) { r.path.forEach(function (p) { lats.push(p[0]); lngs.push(p[1]); }); });
-        PLACES.forEach(function (p) { lats.push(p.lat); lngs.push(p.lng); });
-
-        var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
-        var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
-        var midLat = (minLat + maxLat) / 2;
-        var kx = Math.cos(midLat * Math.PI / 180);
-
-        var contentW = (maxLng - minLng) * kx;
-        var contentH = (maxLat - minLat);
-        var contentAspect = contentW / contentH;
-        var frameAspect = clamp(contentAspect, 0.95, 1.6);
-
-        var VB_W = 1000, VB_H = Math.round(VB_W / frameAspect);
-        var pad = 64;
-        var scale = Math.min((VB_W - pad * 2) / contentW, (VB_H - pad * 2) / contentH);
-        var offX = (VB_W - contentW * scale) / 2;
-        var offY = (VB_H - contentH * scale) / 2;
-
-        function px(lng) { return offX + (lng - minLng) * kx * scale; }
-        function py(lat) { return offY + (maxLat - lat) * scale; }
-        function lngAt(x) { return minLng + (x - offX) / (kx * scale); }
-        function latAt(y) { return maxLat - (y - offY) / scale; }
-
-        svg.setAttribute('viewBox', '0 0 ' + VB_W + ' ' + VB_H);
-        var stage = $('.chart__stage');
-        if (stage) stage.style.aspectRatio = VB_W + ' / ' + VB_H;
-
-        var NS = 'http://www.w3.org/2000/svg';
-        function el(tag, attrs) {
-            var n = document.createElementNS(NS, tag);
-            Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
-            return n;
-        }
-
-        /* Graticule — real quarter-degree lines, labelled */
-        var step = 0.25;
-        var latStart = Math.ceil(latAt(VB_H) / step) * step;
-        for (var la = latStart; la <= latAt(0); la += step) {
-            var y = py(la);
-            if (y < 14 || y > VB_H - 14) continue;
-            gGrat.appendChild(el('line', { x1: 0, y1: y.toFixed(1), x2: VB_W, y2: y.toFixed(1), 'stroke-dasharray': '2 7' }));
-            var tl = el('text', { x: 12, y: (y - 8).toFixed(1) });
-            tl.textContent = la.toFixed(2) + '°N';
-            gGrat.appendChild(tl);
-        }
-        var lngStart = Math.ceil(lngAt(0) / step) * step;
-        for (var lo = lngStart; lo <= lngAt(VB_W); lo += step) {
-            var x = px(lo);
-            if (x < 30 || x > VB_W - 30) continue;
-            gGrat.appendChild(el('line', { x1: x.toFixed(1), y1: 0, x2: x.toFixed(1), y2: VB_H, 'stroke-dasharray': '2 7' }));
-            var tt = el('text', { x: (x + 8).toFixed(1), y: VB_H - 14, 'text-anchor': 'start' });
-            tt.textContent = Math.abs(lo).toFixed(2) + '°W';
-            gGrat.appendChild(tt);
-        }
-
-        /* Reaches */
+        var PENDING = '#6C858D';
+        var ACTIVE = '#0E6B85';
         var active = null;
 
         REACHES.forEach(function (reach, idx) {
-            var pts = reach.path.map(function (p) { return [px(p[1]), py(p[0])]; });
-            var d = smoothPath(pts);
-            reach.km = reachLengthKm(reach.path);
+            var latlngs = reach.path.map(function (p) { return [p[0], p[1]]; });
 
-            var line = el('path', { d: d, class: 'reach-line' });
-            var flow = el('path', { d: d, class: 'reach-flow' });
-            var hit = el('path', {
-                d: d, class: 'reach-hit', tabindex: '0', role: 'button',
-                'aria-label': reach.name + ', ' + reach.where + '. Not yet sampled.'
-            });
+            reach.km = 0;
+            for (var i = 1; i < latlngs.length; i++) {
+                reach.km += map.distance(latlngs[i - 1], latlngs[i]) / 1000;
+            }
 
-            gRivers.appendChild(line);
-            gRivers.appendChild(flow);
-            gRivers.appendChild(hit);
+            var line = L.polyline(latlngs, {
+                color: PENDING, weight: 4, opacity: 0.85,
+                lineCap: 'round', lineJoin: 'round'
+            }).addTo(map);
 
-            var len = 0;
-            try { len = flow.getTotalLength(); } catch (e) { len = 600; }
-            flow.style.strokeDasharray = (len * 0.16) + ' ' + (len * 0.84);
+            line.bindTooltip(reach.name, { className: 'reach-tooltip', sticky: true, direction: 'top' });
 
-            function select() {
-                if (active) {
-                    active.line.classList.remove('is-active');
-                    active.flow.classList.remove('is-running');
-                    active.flow.style.animation = '';
+            function select(fly) {
+                if (active && active !== line) active.setStyle({ color: PENDING, weight: 4 });
+                line.setStyle({ color: ACTIVE, weight: 6 });
+                line.bringToFront();
+                active = line;
+
+                if (fly !== false) {
+                    map.flyToBounds(line.getBounds(), { padding: [48, 48], duration: reduceMotion ? 0 : 0.6 });
                 }
-                line.classList.add('is-active');
-                flow.classList.add('is-running');
-                if (!reduceMotion) {
-                    flow.style.animation = 'reach-flow-run ' + (2.2 + reach.km / 60).toFixed(1) + 's linear infinite';
-                }
-                active = { line: line, flow: flow };
 
                 panelTitle.textContent = reach.name;
                 panelBody.textContent = reach.where + '. We can reach this on foot or by bike, which is the ' +
@@ -650,36 +600,45 @@
                     panelStats.appendChild(div);
                 });
                 statusText.textContent = 'Sampling planned · not yet measured';
+                if (picker) picker.value = String(idx);
             }
 
-            hit.addEventListener('click', select);
-            hit.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
+            line.on('click', function () {
+                activate();
+                select(true);
             });
-            hit.addEventListener('mouseenter', function () { line.classList.add('is-active'); });
-            hit.addEventListener('mouseleave', function () {
-                if (!active || active.line !== line) line.classList.remove('is-active');
-            });
-            hit.addEventListener('focus', select);
 
-            if (idx === 0) reach.select = select;
+            reach.select = select;
+
+            if (picker) {
+                var opt = document.createElement('option');
+                opt.value = String(idx);
+                opt.textContent = reach.name;
+                picker.appendChild(opt);
+            }
         });
 
-        /* Places */
+        // Keyboard- and screen-reader-friendly way to pick a reach without
+        // needing to target a thin line drawn on a map.
+        if (picker) {
+            picker.addEventListener('change', function () {
+                var reach = REACHES[+picker.value];
+                if (reach && reach.select) { activate(); reach.select(true); }
+            });
+        }
+
         PLACES.forEach(function (p) {
-            var x = px(p.lng), y = py(p.lat);
-            gPlaces.appendChild(el('circle', { cx: x.toFixed(1), cy: y.toFixed(1), r: 4 }));
-            var label = el('text', { x: (x + 11).toFixed(1), y: (y + 5.5).toFixed(1) });
-            label.textContent = p.name;
-            gPlaces.appendChild(label);
+            L.circleMarker([p.lat, p.lng], {
+                radius: 4, color: '#0B1F2A', weight: 1, fillColor: '#0B1F2A', fillOpacity: 0.7
+            }).addTo(map).bindTooltip(p.name, {
+                permanent: true, direction: 'right', offset: [6, 0], className: 'reach-tooltip'
+            });
         });
 
-        // Flow keyframes, injected here so the animation lives with the chart
-        var style = document.createElement('style');
-        style.textContent = '@keyframes reach-flow-run{from{stroke-dashoffset:0}to{stroke-dashoffset:-1000}}';
-        document.head.appendChild(style);
+        if (REACHES[0].select) REACHES[0].select(false);
 
-        if (REACHES[0].select) REACHES[0].select();
+        setTimeout(function () { map.invalidateSize(); }, 300);
+        window.addEventListener('resize', function () { map.invalidateSize(); });
     }
 
     /* ── 5. Scroll reveal ──────────────────────────────── */

@@ -881,80 +881,125 @@ h3 {
     align-items: start;
 }
 
+.chart__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    min-width: 0;
+}
+
 .chart__stage {
+    position: relative;
+    height: 560px;
     background: var(--paper-raised);
     border: 1px solid var(--rule);
     border-radius: 4px;
     overflow: hidden;
 }
 
-.chart__svg {
+#watershed-map {
     width: 100%;
-    height: auto;
+    height: 100%;
+    background: var(--paper-raised);
 }
 
-.chart__graticule line {
-    stroke: var(--rule);
-    stroke-width: 1;
+/* Mute the stock OSM palette so it sits inside this page's own,
+   rather than importing a second, louder colour system. */
+#watershed-map .leaflet-tile-pane {
+    filter: saturate(.45) contrast(.92) brightness(1.05);
 }
 
-.chart__graticule text {
+/* Leaflet chrome, restrained to the page's own palette */
+.leaflet-container {
     font-family: var(--f-mono);
-    font-size: 15px;
-    fill: var(--on-paper-dim);
-    opacity: .65;
+    font-size: var(--t-xs);
 }
 
-.chart__rivers path {
-    fill: none;
-    stroke-width: 4.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke: var(--wq-pending);
+.leaflet-control-zoom a {
+    color: var(--on-paper) !important;
+    font-family: var(--f-mono);
+}
+
+.leaflet-control-attribution {
+    font-size: 10px;
+    background: rgba(246, 249, 249, .82) !important;
+}
+
+.leaflet-tooltip.reach-tooltip {
+    font-family: var(--f-mono);
+    font-size: var(--t-xs);
+    letter-spacing: .02em;
+    color: var(--on-paper);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    box-shadow: none;
+    padding: .3rem .6rem;
+}
+
+.leaflet-tooltip.reach-tooltip::before {
+    display: none;
+}
+
+/* Gate: click/tap once before the map can take over scroll or drag */
+.map-activate {
+    position: absolute;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 31, 42, .18);
+    border: none;
+    padding: 0;
     cursor: pointer;
-    transition: stroke .2s var(--ease), stroke-width .2s var(--ease);
+    transition: opacity .25s var(--ease), visibility .25s;
 }
 
-.chart__rivers path:hover,
-.chart__rivers path.is-active {
-    stroke: var(--current);
-    stroke-width: 7;
-}
-
-.chart__rivers .reach-hit {
-    stroke: transparent;
-    stroke-width: 26;
-}
-
-.chart__rivers .reach-hit:hover,
-.chart__rivers .reach-hit.is-active {
-    stroke: transparent;
-    stroke-width: 26;
-}
-
-.chart__rivers .reach-flow {
-    stroke: var(--current-light);
-    stroke-width: 4.5;
-    stroke-linecap: round;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .3s var(--ease);
-}
-
-.chart__rivers .reach-flow.is-running {
-    opacity: .95;
-}
-
-.chart__places circle {
-    fill: var(--on-paper);
-    opacity: .6;
-}
-
-.chart__places text {
+.map-activate span {
     font-family: var(--f-mono);
-    font-size: 16px;
-    letter-spacing: .04em;
-    fill: var(--on-paper-dim);
+    font-size: var(--t-xs);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(11, 31, 42, .88);
+    padding: .65rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, .25);
+}
+
+.map-activate.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.chart__jump {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+}
+
+.chart__jump label {
+    font-family: var(--f-mono);
+    font-size: var(--t-xs);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--on-paper-dim);
+}
+
+.chart__jump select {
+    font-family: var(--f-mono);
+    font-size: var(--t-sm);
+    color: var(--on-paper);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: .55rem .75rem;
+    min-height: 44px;
+    cursor: pointer;
 }
 
 .chart__panel {
@@ -1322,6 +1367,10 @@ h3 {
 @media (max-width: 900px) {
     .chart {
         grid-template-columns: 1fr;
+    }
+
+    .chart__stage {
+        height: 420px;
     }
 
     .log__phase {
