@@ -200,17 +200,21 @@ h3 {
 }
 
 .wordmark__mark {
-    width: 22px;
-    height: 22px;
-    fill: none;
-    stroke: var(--current-light);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    transition: stroke .35s var(--ease);
+    width: 30px;
+    height: 30px;
+    flex: none;
 }
 
-.masthead.is-stuck .wordmark__mark {
-    stroke: var(--current);
+.wordmark__mark rect {
+    fill: #1B2A4E;
+    stroke: rgba(255, 255, 255, .14);
+}
+
+.wordmark__mark path {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.6;
+    stroke-linecap: round;
 }
 
 .wordmark__text {
@@ -280,7 +284,7 @@ h3 {
 
 .nav .nav__cta {
     border: 1px solid currentColor;
-    border-radius: 999px;
+    border-radius: 4px;
     padding: .5rem .95rem;
     color: var(--on-ink);
 }
@@ -306,8 +310,8 @@ h3 {
     gap: .5rem;
     background: none;
     border: 1px solid var(--ink-line);
-    border-radius: 999px;
-    color: inherit;
+    border-radius: 4px;
+    color: var(--on-ink);
     font-family: var(--f-mono);
     font-size: var(--t-xs);
     letter-spacing: .1em;
@@ -315,6 +319,11 @@ h3 {
     padding: .6rem .9rem;
     min-height: 44px;
     cursor: pointer;
+}
+
+.masthead.is-stuck .menu-toggle {
+    color: var(--on-paper);
+    border-color: var(--rule);
 }
 
 .menu-toggle svg {
@@ -423,7 +432,7 @@ h3 {
     gap: .55rem;
     min-height: 48px;
     padding: .8rem 1.4rem;
-    border-radius: 999px;
+    border-radius: 4px;
     border: 1px solid transparent;
     font-family: var(--f-mono);
     font-size: var(--t-sm);
@@ -583,13 +592,14 @@ h3 {
 
 .probe {
     display: grid;
-    grid-template-columns: minmax(220px, 280px) minmax(280px, 1fr) minmax(290px, 350px);
-    gap: var(--s-5);
+    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr) minmax(280px, 320px);
+    gap: var(--s-4);
     align-items: start;
 }
 
 .probe__column {
-    position: relative;
+    position: sticky;
+    top: 6rem;
     padding-left: 3.25rem;
 }
 
@@ -653,7 +663,7 @@ h3 {
 .chip {
     min-height: 40px;
     padding: .45rem .9rem;
-    border-radius: 999px;
+    border-radius: 4px;
     border: 1px solid var(--ink-line);
     background: transparent;
     color: var(--on-ink-dim);
@@ -677,8 +687,46 @@ h3 {
 
 .sliders {
     display: grid;
-    gap: var(--s-3);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--s-4);
+    align-items: start;
 }
+
+.slider-group {
+    display: grid;
+    gap: var(--s-3);
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+.slider-group legend {
+    padding: 0;
+    margin-bottom: var(--s-2);
+    font-family: var(--f-mono);
+    font-size: var(--t-xs);
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--current-light);
+}
+
+/* Per-parameter status, set from its sub-score in script.js */
+.slider label::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: .5rem;
+    border-radius: 2px;
+    background: var(--level, var(--wq-good-lt));
+    vertical-align: .05em;
+    transition: background-color .3s var(--ease);
+}
+
+.slider[data-level="fair"] { --level: var(--wq-fair-lt); }
+.slider[data-level="poor"] { --level: var(--wq-poor-lt); }
+.slider[data-level="bad"] { --level: var(--wq-bad-lt); }
 
 .slider {
     display: grid;
@@ -700,8 +748,9 @@ h3 {
     font-family: var(--f-mono);
     font-size: var(--t-sm);
     font-weight: 500;
-    color: var(--current-light);
+    color: var(--level, var(--wq-good-lt));
     font-variant-numeric: tabular-nums;
+    transition: color .3s var(--ease);
 }
 
 .slider input[type="range"] {
@@ -965,7 +1014,7 @@ h3 {
     color: #fff;
     background: rgba(11, 31, 42, .88);
     padding: .65rem 1.2rem;
-    border-radius: 999px;
+    border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, .25);
 }
 
@@ -1311,6 +1360,9 @@ h3 {
 }
 
 .footer__mark {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
     font-family: var(--f-display);
     font-weight: 700;
     font-size: var(--t-md);
@@ -1448,6 +1500,8 @@ h3 {
     }
 
     .probe__column {
+        position: relative;
+        top: auto;
         max-width: 300px;
     }
 
