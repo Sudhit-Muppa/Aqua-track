@@ -38,8 +38,9 @@ screen.
 
 ## Logo
 
-`favicon.svg` is the three-wave mark. The same SVG is inlined in the masthead and
-footer of `index.html`.
+`favicon.svg` is the three-wave mark on a transparent background: navy in light
+mode, white in dark mode. The same waves are inlined in the masthead and footer of
+`index.html`, drawn in `currentColor` so they follow the text color.
 
 ## The watershed chart
 

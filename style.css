@@ -205,14 +205,9 @@ h3 {
     flex: none;
 }
 
-.wordmark__mark rect {
-    fill: #1B2A4E;
-    stroke: rgba(255, 255, 255, .14);
-}
-
 .wordmark__mark path {
     fill: none;
-    stroke: #fff;
+    stroke: currentColor;
     stroke-width: 2.6;
     stroke-linecap: round;
 }
