@@ -139,14 +139,16 @@
 
     /* ── 3. Field probe ────────────────────────────────── */
 
-    var PARAMS = ['ph', 'oxygen', 'turbidity', 'temp', 'conductivity'];
+    var PARAMS = ['temp', 'turbidity', 'conductivity', 'ph', 'oxygen', 'chloride',
+        'nitrate', 'nitrite', 'ammonia', 'phosphate', 'ecoli'];
 
     var PRESETS = {
-        tap: { ph: 7.4, oxygen: 8.5, turbidity: 0.4, temp: 18, conductivity: 320 },
-        pond: { ph: 7.2, oxygen: 9.0, turbidity: 6, temp: 16, conductivity: 260 },
-        bloom: { ph: 9.3, oxygen: 3.2, turbidity: 45, temp: 29, conductivity: 480 },
-        salt: { ph: 7.6, oxygen: 10.5, turbidity: 12, temp: 3, conductivity: 2100 },
-        runoff: { ph: 6.2, oxygen: 4.8, turbidity: 120, temp: 24, conductivity: 900 }
+        tap: { ph: 7.4, oxygen: 8.5, turbidity: 0.4, temp: 18, conductivity: 320, chloride: 30, nitrate: 0.5, nitrite: 0, ammonia: 0, phosphate: 0.02, ecoli: 0 },
+        pond: { ph: 7.2, oxygen: 9.0, turbidity: 6, temp: 16, conductivity: 260, chloride: 25, nitrate: 0.6, nitrite: 0.02, ammonia: 0.05, phosphate: 0.03, ecoli: 40 },
+        bloom: { ph: 9.3, oxygen: 3.2, turbidity: 45, temp: 29, conductivity: 480, chloride: 60, nitrate: 3.5, nitrite: 0.15, ammonia: 0.6, phosphate: 0.4, ecoli: 180 },
+        salt: { ph: 7.6, oxygen: 10.5, turbidity: 12, temp: 3, conductivity: 2100, chloride: 600, nitrate: 1.2, nitrite: 0.03, ammonia: 0.1, phosphate: 0.05, ecoli: 60 },
+        runoff: { ph: 6.2, oxygen: 4.8, turbidity: 120, temp: 24, conductivity: 900, chloride: 180, nitrate: 5, nitrite: 0.2, ammonia: 0.8, phosphate: 0.3, ecoli: 900 },
+        fertilizer: { ph: 7.8, oxygen: 6.4, turbidity: 18, temp: 21, conductivity: 520, chloride: 70, nitrate: 12, nitrite: 0.3, ammonia: 0.4, phosphate: 0.6, ecoli: 120 }
     };
 
     var GRADES = [
@@ -170,7 +172,7 @@
             return clamp(v / 2 * 20, 0, 100);
         },
         turbidity: function (v) {
-            return clamp(100 - 40 * Math.log10(Math.max(v, 1)), 0, 100);
+            return clamp(100 - 40 * Math.log10(Math.max(v, 3) / 3), 0, 100); // under 3 NTU reads as clear
         },
         temp: function (v) {
             var d = v < 8 ? (8 - v) * 3 : v > 20 ? (v - 20) * 7 : 0;
@@ -180,28 +182,68 @@
             if (v > 500) return clamp(100 - (v - 500) / 25, 0, 100);
             if (v < 100) return clamp(100 - (100 - v) / 2, 0, 100);
             return 100;
+        },
+        // EPA aquatic-life chronic 230 mg/L, acute 860 mg/L
+        chloride: function (v) {
+            if (v <= 230) return 100 - v / 230 * 10;
+            if (v <= 860) return 90 - (v - 230) / 630 * 70;
+            return clamp(20 - (v - 860) / 7, 0, 100);
+        },
+        // Undisturbed streams sit under 1 mg/L; 10 mg/L is the drinking-water limit
+        nitrate: function (v) {
+            if (v <= 1) return 100;
+            if (v <= 10) return 100 - (v - 1) / 9 * 70;
+            return clamp(30 - (v - 10) * 3, 0, 100);
+        },
+        nitrite: function (v) { return clamp(100 - Math.max(v - 0.05, 0) * 155, 0, 100); },
+        ammonia: function (v) { return clamp(100 - Math.max(v - 0.1, 0) * 75, 0, 100); },
+        // Above 0.1 mg/L, still water starts growing algae
+        phosphate: function (v) { return clamp(100 - Math.max(v - 0.05, 0) * 300, 0, 100); },
+        // EPA recreational: 126 CFU/100 mL average, 410 single sample
+        ecoli: function (v) {
+            if (v <= 126) return 100 - v / 126 * 15;
+            if (v <= 410) return 85 - (v - 126) / 284 * 45;
+            return clamp(40 - (v - 410) / 590 * 40, 0, 100);
         }
     };
 
-    var WEIGHT = { oxygen: 0.27, turbidity: 0.25, ph: 0.20, conductivity: 0.18, temp: 0.10 };
+    var WEIGHT = {
+        oxygen: 0.17, nitrate: 0.12, turbidity: 0.10, ph: 0.10, phosphate: 0.10, ecoli: 0.10,
+        ammonia: 0.08, temp: 0.07, conductivity: 0.06, nitrite: 0.05, chloride: 0.05
+    };
 
     var FORMAT = {
         ph: function (v) { return v.toFixed(1); },
         oxygen: function (v) { return v.toFixed(1) + ' mg/L'; },
         turbidity: function (v) { return Math.round(v) + ' NTU'; },
         temp: function (v) { return v.toFixed(v % 1 ? 1 : 0) + ' °C'; },
-        conductivity: function (v) { return Math.round(v).toLocaleString('en-US') + ' µS/cm'; }
+        conductivity: function (v) { return Math.round(v).toLocaleString('en-US') + ' µS/cm'; },
+        chloride: function (v) { return Math.round(v) + ' mg/L'; },
+        nitrate: function (v) { return v.toFixed(1) + ' mg/L'; },
+        nitrite: function (v) { return v.toFixed(2) + ' mg/L'; },
+        ammonia: function (v) { return v.toFixed(2) + ' mg/L'; },
+        phosphate: function (v) { return v.toFixed(2) + ' mg/L'; },
+        ecoli: function (v) { return Math.round(v) + ' CFU/100 mL'; }
     };
 
     function diagnose(state) {
         var v = state;
+        if (v.ecoli > 410) return 'E. coli is at ' + Math.round(v.ecoli) + ' CFU per 100 mL, over the EPA single-sample limit for swimming.';
+        if (v.ammonia > 1) return 'Ammonia is ' + v.ammonia.toFixed(2) + ' mg/L, toxic to fish at this level and usually a sign of sewage or manure.';
+        if (v.nitrite > 0.5) return 'Nitrite is ' + v.nitrite.toFixed(2) + ' mg/L, a toxic in-between step that means the nitrogen cycle is backed up.';
         if (v.ph < 6.5) return 'pH is acidic at ' + v.ph.toFixed(1) + ', which points to acid runoff or a lot of decaying matter upstream.';
         if (v.ph > 8.5) return 'pH is alkaline at ' + v.ph.toFixed(1) + ', the reading that usually comes with a heavy algal bloom.';
         if (v.oxygen < 5) return 'Dissolved oxygen is down to ' + v.oxygen.toFixed(1) + ' mg/L, which is around where fish begin to suffocate.';
+        if (v.nitrate > 10) return 'Nitrate is ' + v.nitrate.toFixed(1) + ' mg/L, over the EPA drinking-water limit and a strong sign of fertilizer runoff.';
+        if (v.phosphate > 0.1) return 'Phosphate is ' + v.phosphate.toFixed(2) + ' mg/L, enough to feed an algal bloom in still water.';
+        if (v.chloride > 230) return 'Chloride is ' + Math.round(v.chloride) + ' mg/L, past the EPA chronic limit for aquatic life, which almost always means road salt.';
         if (v.turbidity > 25) return 'Turbidity is ' + Math.round(v.turbidity) + ' NTU, so enough sediment is suspended in the column to block light from the bottom.';
         if (v.conductivity > 700) return 'Conductivity is ' + Math.round(v.conductivity).toLocaleString('en-US') + ' µS/cm, high enough to suggest road salt or urban runoff reaching the reach.';
         if (v.temp > 24) return 'The water is ' + v.temp.toFixed(0) + ' °C, warm enough to hold less oxygen and to favour algae over everything else.';
         if (v.temp < 5) return 'The water is ' + v.temp.toFixed(0) + ' °C, cold enough that biological activity stalls and readings drift.';
+        if (v.ecoli > 126) return 'E. coli is ' + Math.round(v.ecoli) + ' CFU per 100 mL, above the EPA average for water people swim in.';
+        if (v.nitrate > 3) return 'Nitrate is ' + v.nitrate.toFixed(1) + ' mg/L, more than an undisturbed stream carries.';
+        if (v.ammonia > 0.5) return 'Ammonia is ' + v.ammonia.toFixed(2) + ' mg/L, below toxic but higher than clean water should show.';
         if (v.conductivity < 100) return 'Conductivity is only ' + Math.round(v.conductivity) + ' µS/cm, unusually pure for a stream in this county.';
         if (v.oxygen < 7) return 'Dissolved oxygen sits at ' + v.oxygen.toFixed(1) + ' mg/L, workable for most fish but with no margin left.';
         if (v.turbidity > 10) return 'Turbidity is ' + Math.round(v.turbidity) + ' NTU, cloudy but within what a healthy pond carries after rain.';
@@ -223,10 +265,12 @@
         var state = {};
         var inputs = {};
         var outputs = {};
+        var sliders = {};
 
         PARAMS.forEach(function (key) {
             inputs[key] = $('#s-' + key, root);
             outputs[key] = $('#o-' + key, root);
+            sliders[key] = inputs[key].closest('.slider');
             state[key] = parseFloat(inputs[key].value);
         });
 
@@ -239,11 +283,15 @@
         }
 
         function evaluate() {
-            var total = 0;
+            var total = 0, worst = 100;
             PARAMS.forEach(function (key) {
-                total += SCORE[key](state[key]) * WEIGHT[key];
+                var sub = SCORE[key](state[key]);
+                total += sub * WEIGHT[key];
+                worst = Math.min(worst, sub);
+                sliders[key].dataset.level = sub >= 80 ? 'good' : sub >= 60 ? 'fair' : sub >= 40 ? 'poor' : 'bad';
             });
-            var score = Math.round(clamp(total, 0, 100));
+            // One failing parameter caps the grade, so a weighted average can't hide it
+            var score = Math.round(clamp(Math.min(total, worst + 40), 0, 100));
             var grade = GRADES.find(function (g) { return score >= g.min; });
 
             numEl.textContent = score;
@@ -258,6 +306,7 @@
             visual.turbidity = state.turbidity;
             visual.oxygen = state.oxygen;
             visual.temp = state.temp;
+            visual.algae = clamp((state.nitrate / 10 + state.phosphate / 0.3) / 2, 0, 1);
             if (reduceMotion) drawColumn(0);
         }
 
@@ -341,6 +390,7 @@
                 Math.round(A[2] + (B[2] - A[2]) * t)
             ];
         }
+        function toHex(c) { return '#' + ((1 << 24) | (c[0] << 16) | (c[1] << 8) | c[2]).toString(16).slice(1); }
         function rgba(c, a) { return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
 
         var SURFACE = 34;
@@ -348,7 +398,8 @@
         function drawColumn(t) {
             var turb = visual.turbidity;
             var murk = clamp(Math.log10(Math.max(turb, 1)) / 2.3, 0, 1); // 0 clear → 1 opaque
-            var tint = visual.tint;
+            // Nutrient load greens the water, the way an algae-fed pond looks
+            var tint = toHex(mix(visual.tint, '#7FA83A', (visual.algae || 0) * 0.6));
 
             ctx.clearRect(0, 0, W, H);
 

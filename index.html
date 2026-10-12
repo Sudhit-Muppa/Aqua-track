@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Aqua Track — Measuring Loudoun's water, one reach at a time</title>
+    <title>Aqua Track | Measuring Loudoun's water, one reach at a time</title>
     <meta name="description"
         content="Six high school students in Loudoun County, Virginia, built a water-quality probe and are sampling the ponds and Potomac tributaries nobody else tests.">
     <meta name="theme-color" content="#0B1F2A">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
     <meta property="og:title" content="Aqua Track">
     <meta property="og:description"
@@ -20,7 +21,7 @@
         href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap"
         rel="stylesheet">
 
-    <!-- Leaflet — open-source map library, no API key -->
+    <!-- Leaflet: open-source map library, no API key -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
@@ -34,9 +35,9 @@
     <header class="masthead">
         <div class="masthead__inner">
             <a class="wordmark" href="#top" aria-label="Aqua Track, back to top">
-                <svg class="wordmark__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z" />
-                    <path d="M5.6 16.2h12.8" />
+                <svg class="wordmark__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                    <rect width="32" height="32" rx="7" />
+                    <path d="M6 10.5q2.5-2.6 5 0t5 0t5 0t5 0M6 16q2.5-2.6 5 0t5 0t5 0t5 0M6 21.5q2.5-2.6 5 0t5 0t5 0t5 0" />
                 </svg>
                 <span class="wordmark__text">Aqua<em>Track</em></span>
             </a>
@@ -101,14 +102,14 @@
                         with a small cut on his leg. The wound was exposed to <em>Vibrio vulnificus</em>, a bacterium
                         that occurs naturally in warm, salty and brackish water, including near the Chesapeake Bay
                         and the Potomac. He died. Most people have never heard of Vibrio, and cases like this are
-                        rare — but they are the sharp end of something ordinary. Urban runoff kills aquatic life,
+                        rare, but they are the sharp end of something ordinary. Urban runoff kills aquatic life,
                         pushes fish past the point where they are safe to eat, and knocks the balance of a waterway
                         out of order. It happens because dumping runoff is cheaper than treating it. Stretches of the
                         Potomac are unsafe to swim in today, between the algal blooms, the runoff, and the bacteria
                         that come with them.</p>
 
                     <p>Our own start was smaller. One of us, Sudhit, went fishing on rivers near the Potomac and came
-                        home with nothing — algae, plastic bags, bottles. He complained to a friend who had been to a
+                        home with nothing but algae, plastic bags and bottles. He complained to a friend who had been to a
                         different spot and seen exactly the same thing. So we gathered a few more people and started
                         the Aqua Track Project. The more we read about the water in Loudoun County, the clearer it
                         got: stable freshwater ecosystems here are the exception, not the rule. That became the whole
@@ -186,40 +187,90 @@
                                     salt</button>
                                 <button type="button" class="chip" data-preset="runoff" aria-pressed="false">Storm
                                     runoff</button>
+                                <button type="button" class="chip" data-preset="fertilizer" aria-pressed="false">Lawn
+                                    fertilizer</button>
                             </div>
                         </div>
 
                         <div class="sliders">
-                            <div class="slider" data-key="ph">
-                                <label for="s-ph">pH</label>
-                                <output for="s-ph" id="o-ph">7.2</output>
-                                <input type="range" id="s-ph" min="4" max="11" step="0.1" value="7.2">
-                                <p class="slider__scale"><span>4 acidic</span><span>11 alkaline</span></p>
-                            </div>
-                            <div class="slider" data-key="oxygen">
-                                <label for="s-oxygen">Dissolved oxygen</label>
-                                <output for="s-oxygen" id="o-oxygen">9.0 mg/L</output>
-                                <input type="range" id="s-oxygen" min="0" max="14" step="0.1" value="9">
-                                <p class="slider__scale"><span>0 suffocating</span><span>14 saturated</span></p>
-                            </div>
-                            <div class="slider" data-key="turbidity">
-                                <label for="s-turbidity">Turbidity</label>
-                                <output for="s-turbidity" id="o-turbidity">6 NTU</output>
-                                <input type="range" id="s-turbidity" min="0" max="200" step="1" value="6">
-                                <p class="slider__scale"><span>0 clear</span><span>200 opaque</span></p>
-                            </div>
-                            <div class="slider" data-key="temp">
-                                <label for="s-temp">Temperature</label>
-                                <output for="s-temp" id="o-temp">16 &deg;C</output>
-                                <input type="range" id="s-temp" min="0" max="35" step="0.5" value="16">
-                                <p class="slider__scale"><span>0 &deg;C</span><span>35 &deg;C</span></p>
-                            </div>
-                            <div class="slider" data-key="conductivity">
-                                <label for="s-conductivity">Conductivity</label>
-                                <output for="s-conductivity" id="o-conductivity">260 &micro;S/cm</output>
-                                <input type="range" id="s-conductivity" min="20" max="3000" step="10" value="260">
-                                <p class="slider__scale"><span>20 pure</span><span>3000 saline</span></p>
-                            </div>
+                            <fieldset class="slider-group">
+                                <legend>Physical</legend>
+                                <div class="slider" data-key="temp">
+                                    <label for="s-temp">Temperature</label>
+                                    <output for="s-temp" id="o-temp">16 &deg;C</output>
+                                    <input type="range" id="s-temp" min="0" max="35" step="0.5" value="16">
+                                    <p class="slider__scale"><span>0 &deg;C</span><span>35 &deg;C</span></p>
+                                </div>
+                                <div class="slider" data-key="turbidity">
+                                    <label for="s-turbidity">Turbidity</label>
+                                    <output for="s-turbidity" id="o-turbidity">6 NTU</output>
+                                    <input type="range" id="s-turbidity" min="0" max="200" step="1" value="6">
+                                    <p class="slider__scale"><span>0 clear</span><span>200 opaque</span></p>
+                                </div>
+                                <div class="slider" data-key="conductivity">
+                                    <label for="s-conductivity">Conductivity</label>
+                                    <output for="s-conductivity" id="o-conductivity">260 &micro;S/cm</output>
+                                    <input type="range" id="s-conductivity" min="20" max="3000" step="10" value="260">
+                                    <p class="slider__scale"><span>20 pure</span><span>3000 saline</span></p>
+                                </div>
+                            </fieldset>
+                            <fieldset class="slider-group">
+                                <legend>Chemistry</legend>
+                                <div class="slider" data-key="ph">
+                                    <label for="s-ph">pH</label>
+                                    <output for="s-ph" id="o-ph">7.2</output>
+                                    <input type="range" id="s-ph" min="4" max="11" step="0.1" value="7.2">
+                                    <p class="slider__scale"><span>4 acidic</span><span>11 alkaline</span></p>
+                                </div>
+                                <div class="slider" data-key="oxygen">
+                                    <label for="s-oxygen">Dissolved oxygen</label>
+                                    <output for="s-oxygen" id="o-oxygen">9.0 mg/L</output>
+                                    <input type="range" id="s-oxygen" min="0" max="14" step="0.1" value="9">
+                                    <p class="slider__scale"><span>0 suffocating</span><span>14 saturated</span></p>
+                                </div>
+                                <div class="slider" data-key="chloride">
+                                    <label for="s-chloride">Chloride</label>
+                                    <output for="s-chloride" id="o-chloride">25 mg/L</output>
+                                    <input type="range" id="s-chloride" min="0" max="1000" step="5" value="25">
+                                    <p class="slider__scale"><span>0</span><span>1000 mg/L</span></p>
+                                </div>
+                            </fieldset>
+                            <fieldset class="slider-group">
+                                <legend>Nutrients</legend>
+                                <div class="slider" data-key="nitrate">
+                                    <label for="s-nitrate">Nitrate (NO&#8323;)</label>
+                                    <output for="s-nitrate" id="o-nitrate">0.6 mg/L</output>
+                                    <input type="range" id="s-nitrate" min="0" max="20" step="0.1" value="0.6">
+                                    <p class="slider__scale"><span>0</span><span>20 mg/L</span></p>
+                                </div>
+                                <div class="slider" data-key="nitrite">
+                                    <label for="s-nitrite">Nitrite (NO&#8322;)</label>
+                                    <output for="s-nitrite" id="o-nitrite">0.02 mg/L</output>
+                                    <input type="range" id="s-nitrite" min="0" max="1" step="0.01" value="0.02">
+                                    <p class="slider__scale"><span>0</span><span>1 mg/L</span></p>
+                                </div>
+                                <div class="slider" data-key="ammonia">
+                                    <label for="s-ammonia">Ammonia (NH&#8323;)</label>
+                                    <output for="s-ammonia" id="o-ammonia">0.05 mg/L</output>
+                                    <input type="range" id="s-ammonia" min="0" max="3" step="0.05" value="0.05">
+                                    <p class="slider__scale"><span>0</span><span>3 mg/L</span></p>
+                                </div>
+                                <div class="slider" data-key="phosphate">
+                                    <label for="s-phosphate">Phosphate (PO&#8324;)</label>
+                                    <output for="s-phosphate" id="o-phosphate">0.03 mg/L</output>
+                                    <input type="range" id="s-phosphate" min="0" max="1" step="0.01" value="0.03">
+                                    <p class="slider__scale"><span>0</span><span>1 mg/L</span></p>
+                                </div>
+                            </fieldset>
+                            <fieldset class="slider-group">
+                                <legend>Bacteria</legend>
+                                <div class="slider" data-key="ecoli">
+                                    <label for="s-ecoli">E. coli</label>
+                                    <output for="s-ecoli" id="o-ecoli">40 CFU/100 mL</output>
+                                    <input type="range" id="s-ecoli" min="0" max="1000" step="5" value="40">
+                                    <p class="slider__scale"><span>0</span><span>1000 CFU</span></p>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
 
@@ -242,9 +293,10 @@
                             <p class="readout__report-text">Water quality reads Good at 86 out of 100. Every parameter
                                 sits inside the healthy range for a freshwater pond.</p>
                         </div>
-                        <p class="readout__note">This panel runs a simplified index built for the web, using the same
-                            five parameters the probe reads. It is here to show how the scoring works — it is not a
-                            live feed from a sensor.</p>
+                        <p class="readout__note">This panel runs a simplified index built for the web. The v1 probe
+                            reads the physical parameters, pH and oxygen; the nutrient, chloride and E. coli sliders
+                            show how test-kit readings would weigh in. One failing parameter caps the score. It is a
+                            demonstration of the scoring, not a live feed from a sensor.</p>
                     </div>
                 </div>
             </div>
@@ -257,8 +309,8 @@
                     <p class="eyebrow">Survey chart &middot; sampling not yet begun</p>
                     <h2>The reaches we are walking.</h2>
                     <p class="sec-head__sub">Nine reaches across the Potomac basin, drawn from our own route
-                        planning. Select one to see what we intend to sample there. Field work is paused for winter —
-                        when it restarts, each reach fills in with its measured grade.</p>
+                        planning. Select one to see what we intend to sample there. Field work is paused for winter.
+                        When it restarts, each reach fills in with its measured grade.</p>
                 </header>
 
                 <div class="chart">
@@ -309,7 +361,7 @@
                     <p class="eyebrow">Project log</p>
                     <h2>Where the work actually stands.</h2>
                     <p class="sec-head__sub">Updated as things move. Anything filed under Next or Later is planned,
-                        not finished — we would rather say so than pad the list.</p>
+                        not finished. We would rather say so than pad the list.</p>
                 </header>
 
                 <ol class="log">
@@ -339,7 +391,7 @@
                             <li>
                                 <h3>First reaches sampled</h3>
                                 <p>Goose Creek, Broad Run and Difficult Run, plus the neighborhood ponds around
-                                    Ashburn and Leesburg — the small water that never gets a data point.</p>
+                                    Ashburn and Leesburg: the small water that never gets a data point.</p>
                             </li>
                             <li>
                                 <h3>Readings go on the map</h3>
@@ -401,15 +453,15 @@
                     <p class="eyebrow">Take action</p>
                     <h2>Six people cannot fix a county's water.</h2>
                     <p class="sec-head__sub">That is not modesty, it is arithmetic. What actually moves the number is
-                        what happens on the ground upstream of every reach on that chart — driveways, lawns, storm
+                        what happens on the ground upstream of every reach on that chart: driveways, lawns, storm
                         drains. Most of it is small and most of it is free.</p>
                 </header>
 
                 <div class="actions">
                     <article class="action">
                         <h3>Keep it out of the storm drain</h3>
-                        <p>A storm drain is not a sink. Whatever goes down it — paint, oil, soapy car-wash water,
-                            grass clippings — arrives in a creek untreated, usually within the hour.</p>
+                        <p>A storm drain is not a sink. Whatever goes down it (paint, oil, soapy car-wash water,
+                            grass clippings) arrives in a creek untreated, usually within the hour.</p>
                     </article>
                     <article class="action">
                         <h3>Sweep, don't hose</h3>
@@ -457,14 +509,17 @@
 
     <footer class="footer">
         <div class="wrap footer__inner">
-            <p class="footer__mark">Aqua<em>Track</em></p>
+            <p class="footer__mark"><svg class="wordmark__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <rect width="32" height="32" rx="7" />
+                <path d="M6 10.5q2.5-2.6 5 0t5 0t5 0t5 0M6 16q2.5-2.6 5 0t5 0t5 0t5 0M6 21.5q2.5-2.6 5 0t5 0t5 0t5 0" />
+            </svg><span>Aqua<em>Track</em></span></p>
             <p class="footer__meta">A student project from Loudoun County, Virginia. Entered in Step Up Loudoun
                 Youth.</p>
             <p class="footer__meta footer__meta--dim">&copy; 2025 Aqua Track</p>
         </div>
     </footer>
 
-    <!-- Leaflet — open-source map library, no API key -->
+    <!-- Leaflet: open-source map library, no API key -->
     <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="script.js" defer></script>

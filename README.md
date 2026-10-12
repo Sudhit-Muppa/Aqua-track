@@ -27,10 +27,19 @@ Deploys as-is to GitHub Pages.
 ## The field probe
 
 The interactive panel in the Probe section runs a simplified water quality index
-over the five parameters the ESP32 rig reads: pH, dissolved oxygen, turbidity,
-temperature and conductivity. Sub-index curves and weights live in `SCORE` and
-`WEIGHT` in `script.js`. It is a demonstration model, not a live sensor feed —
-the page says so on screen.
+over eleven parameters in four groups: physical (temperature, turbidity,
+conductivity), chemistry (pH, dissolved oxygen, chloride), nutrients (nitrate,
+nitrite, ammonia, phosphate) and bacteria (E. coli). The ESP32 rig reads the
+physical parameters, pH and oxygen; the rest stand in for test-kit readings.
+Sub-index curves and weights live in `SCORE` and `WEIGHT` in `script.js`, and the
+single worst sub-score caps the total so one failing parameter cannot be averaged
+away. It is a demonstration model, not a live sensor feed. The page says so on
+screen.
+
+## Logo
+
+`favicon.svg` is the three-wave mark. The same SVG is inlined in the masthead and
+footer of `index.html`.
 
 ## The watershed chart
 
