@@ -1529,3 +1529,52 @@ h3 {
         transform: none;
     }
 }
+
+/* ── Legal pages ───────────────────────────────────────── */
+
+.legal {
+    padding-top: calc(var(--s-7) + 3rem);
+}
+
+.legal h1 {
+    font-size: var(--t-xl);
+    margin-block: var(--s-2) var(--s-3);
+}
+
+.legal .prose h2 {
+    font-size: var(--t-lg);
+    margin-top: var(--s-5);
+    margin-bottom: var(--s-2);
+}
+
+.legal .prose ul {
+    margin-top: var(--s-2);
+    padding-left: 1.25rem;
+}
+
+.legal .prose ul+p {
+    margin-top: var(--s-3);
+}
+
+.legal .prose li+li {
+    margin-top: var(--s-1);
+}
+
+.legal .prose a {
+    color: var(--current);
+}
+
+.footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-1) var(--s-3);
+    list-style: none;
+    padding: 0;
+    font-family: var(--f-mono);
+    font-size: var(--t-xs);
+    letter-spacing: .04em;
+}
+
+.footer__links a {
+    color: var(--on-ink);
+}
