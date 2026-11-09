@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Account | Aqua Track</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Finish confirming your AquaTrack email or choose a new password.">
+    <meta name="theme-color" content="#0B1F2A">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#content">Skip to content</a>
+
+    <header class="masthead is-stuck">
+        <div class="masthead__inner">
+            <a class="wordmark" href="index.html" aria-label="Aqua Track home">
+                <svg class="wordmark__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                    <path d="M3 9.8q2.6-2 5.2 0t5.2 0t5.2 0t5.2 0t5.2 0M3 16q2.6-2 5.2 0t5.2 0t5.2 0t5.2 0t5.2 0M3 22.2q2.6-2 5.2 0t5.2 0t5.2 0t5.2 0t5.2 0" />
+                </svg>
+                <span class="wordmark__text">Aqua<em>Track</em></span>
+            </a>
+        </div>
+    </header>
+
+    <main class="band legal" id="content">
+        <div class="wrap">
+            <p class="eyebrow">AquaTrack account</p>
+
+            <section id="working" class="prose" aria-live="polite">
+                <h1 tabindex="-1">One moment</h1>
+                <p class="prose__lead">Checking your link.</p>
+            </section>
+
+            <section id="confirmed" class="prose" hidden>
+                <h1 tabindex="-1">Email confirmed</h1>
+                <p class="prose__lead">Your AquaTrack account is ready. Open the app on your phone and sign in.</p>
+                <p>You can close this page.</p>
+            </section>
+
+            <section id="recovery" class="prose" hidden>
+                <h1 tabindex="-1">Choose a new password</h1>
+                <p class="prose__lead">Pick a password of at least 8 characters. Then sign in to the app with it.</p>
+                <form id="password-form" novalidate>
+                    <div class="field">
+                        <label for="password">New password</label>
+                        <input id="password" name="password" type="password" minlength="8" autocomplete="new-password"
+                            required>
+                    </div>
+                    <div class="field">
+                        <label for="confirm">Type it again</label>
+                        <input id="confirm" name="confirm" type="password" minlength="8" autocomplete="new-password"
+                            required>
+                    </div>
+                    <p id="form-error" class="field__error" role="alert" hidden></p>
+                    <button class="btn btn--solid" type="submit" id="submit">Save password</button>
+                </form>
+            </section>
+
+            <section id="done" class="prose" hidden>
+                <h1 tabindex="-1">Password updated</h1>
+                <p class="prose__lead">Open the AquaTrack app and sign in with your new password.</p>
+                <p>You can close this page.</p>
+            </section>
+
+            <section id="error" class="prose" hidden>
+                <h1 tabindex="-1">That link didn't work</h1>
+                <p class="prose__lead" id="error-text">The link may have expired or already been used.</p>
+                <p>Ask for a new one from the app: on the sign-in screen, tap <strong>Forgot password?</strong>, or sign
+                    up again if your confirmation link expired. If it keeps failing, email
+                    <a href="mailto:theaquatrackinitiative@gmail.com">theaquatrackinitiative@gmail.com</a>.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wrap footer__inner">
+            <p class="footer__mark"><svg class="wordmark__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <path d="M3 9.8q2.6-2 5.2 0t5.2 0t5.2 0t5.2 0t5.2 0M3 16q2.6-2 5.2 0t5.2 0t5.2 0t5.2 0t5.2 0M3 22.2q2.6-2 5.2 0t5.2 0t5.2 0t5.2 0t5.2 0" />
+            </svg><span>Aqua<em>Track</em></span></p>
+            <p class="footer__meta">A student project from Loudoun County, Virginia. Entered in Step Up Loudoun
+                Youth.</p>
+            <ul class="footer__links">
+                <li><a href="mailto:theaquatrackinitiative@gmail.com">theaquatrackinitiative@gmail.com</a></li>
+                <li><a href="privacy.html">Privacy</a></li>
+                <li><a href="terms.html">Terms</a></li>
+                <li><a href="delete-account.html">Account deletion</a></li>
+            </ul>
+            <p class="footer__meta footer__meta--dim">&copy; 2026 Aqua Track</p>
+        </div>
+    </footer>
+
+    <!-- Pinned version with its integrity hash (sha384 of the UMD bundle), like Leaflet on the home page. -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js"
+        integrity="sha384-uteMfOloLDGt042uDz+xHGF3ym63/WQ6rFq7murQRG8Ih7QrXGEGNtWd8688sb4O"
+        crossorigin="anonymous"></script>
+    <script>
+        (function () {
+            // Fill these two in from Supabase > Project Settings > API. The anon
+            // (publishable) key is meant to be public; row level security on
+            // every table and bucket is what protects the data behind it.
+            var SUPABASE_URL = 'PASTE_SUPABASE_URL';
+            var SUPABASE_ANON_KEY = 'PASTE_SUPABASE_ANON_KEY';
+
+            var sections = ['working', 'confirmed', 'recovery', 'done', 'error'];
+            function show(id, message) {
+                sections.forEach(function (s) { document.getElementById(s).hidden = s !== id; });
+                if (id === 'error' && message) document.getElementById('error-text').textContent = message;
+                var focus = id === 'recovery' ? document.getElementById('password') : document.getElementById(id).querySelector('h1');
+                if (focus) focus.focus();
+            }
+
+            // Supabase puts parameters in the query (token_hash flow) or the
+            // fragment (implicit flow). Read both, then scrub the address bar so
+            // the tokens never sit in history or get shared by accident.
+            var query = new URLSearchParams(location.search);
+            var hash = new URLSearchParams(location.hash.replace(/^#/, ''));
+            function param(name) { return query.get(name) || hash.get(name); }
+            history.replaceState(null, '', location.pathname);
+
+            var errorText = param('error_description') || param('error');
+            if (errorText) return show('error', errorText);
+            if (param('code')) {
+                // PKCE: only the app that started the flow holds the verifier.
+                return show('error', 'This link has to be opened on the phone you requested it from. Open it there, or ask for a new link from the app.');
+            }
+            if (!window.supabase || SUPABASE_URL.indexOf('PASTE_') === 0) {
+                return show('error', 'This page is not set up yet. Email us and we will finish it for you.');
+            }
+
+            var client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+            });
+            var tokenHash = param('token_hash');
+            var type = param('type');
+            var allowed = ['signup', 'recovery', 'email_change', 'magiclink', 'invite', 'email'];
+            var accessToken = hash.get('access_token');
+            var refreshToken = hash.get('refresh_token');
+
+            function finish() { show(type === 'recovery' ? 'recovery' : 'confirmed'); }
+
+            (async function () {
+                try {
+                    if (tokenHash && allowed.indexOf(type) >= 0) {
+                        var verified = await client.auth.verifyOtp({ token_hash: tokenHash, type: type });
+                        if (verified.error) throw verified.error;
+                        return finish();
+                    }
+                    if (accessToken && refreshToken) {
+                        var set = await client.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+                        if (set.error) throw set.error;
+                        return finish();
+                    }
+                    show('error', 'This page only works from a link in an AquaTrack email.');
+                } catch (e) {
+                    show('error', (e && e.message) || 'The link may have expired or already been used.');
+                }
+            })();
+
+            document.getElementById('password-form').addEventListener('submit', async function (ev) {
+                ev.preventDefault();
+                var pw = document.getElementById('password').value;
+                var again = document.getElementById('confirm').value;
+                var err = document.getElementById('form-error');
+                err.hidden = true;
+                if (pw.length < 8) { err.textContent = 'Use at least 8 characters.'; err.hidden = false; return; }
+                if (pw !== again) { err.textContent = 'The two passwords do not match.'; err.hidden = false; return; }
+                var button = document.getElementById('submit');
+                button.disabled = true;
+                var updated = await client.auth.updateUser({ password: pw });
+                button.disabled = false;
+                if (updated.error) { err.textContent = updated.error.message; err.hidden = false; return; }
+                // No signOut here: its default scope would also sign the user out of the app.
+                show('done');
+            });
+        })();
+    </script>
+</body>
+
+</html>

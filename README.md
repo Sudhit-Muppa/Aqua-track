@@ -1,6 +1,6 @@
 # Aqua Track
 
-Website for the Aqua Track Project — six middle school students in Loudoun County,
+Website for the Aqua Track Project: six high school students in Loudoun County,
 Virginia, measuring water quality in local ponds and Potomac tributaries.
 Entered in Step Up Loudoun Youth.
 
@@ -14,7 +14,9 @@ No build step, no dependencies. Open `index.html`, or serve the folder:
 python3 -m http.server 8000
 ```
 
-Deploys as-is to GitHub Pages.
+Vercel deploys `main` to https://www.aquatrackproject.org. Every file is served
+at its own path, so the legal pages live at `/privacy.html`, `/terms.html`,
+`/delete-account.html` and `/auth.html`; the apps link to those addresses.
 
 ## Files
 
@@ -23,6 +25,25 @@ Deploys as-is to GitHub Pages.
 | `index.html` | All page content |
 | `style.css` | Design tokens and every component style |
 | `script.js` | Masthead, hero canvas, field probe, watershed chart, scroll reveal |
+| `privacy.html`, `terms.html` | Privacy policy and terms for the site and the AquaTrack app |
+| `delete-account.html` | How to delete an AquaTrack account; the app stores link here |
+| `auth.html` | Finishes the app's email confirmation and password reset links |
+
+## The account page
+
+`auth.html` is where Supabase sends people from the app's confirmation and
+password-reset emails. It loads a pinned supabase-js from jsDelivr with an
+integrity hash, reads `token_hash` and `type` from the link, calls
+`verifyOtp`, and shows either "Email confirmed" or a new-password form. Before
+it works, paste the project URL and the anon (publishable) key into the two
+constants at the top of its script; the anon key is public by design, so row
+level security must be on for every table and bucket.
+
+In the Supabase dashboard set Site URL to `https://www.aquatrackproject.org`,
+add `https://www.aquatrackproject.org/auth.html` to the redirect URLs, and
+change the email templates to link to
+`{{ .SiteURL }}/auth.html?token_hash={{ .TokenHash }}&type=signup` (and
+`type=recovery` for the reset template) instead of `{{ .ConfirmationURL }}`.
 
 ## The field probe
 
