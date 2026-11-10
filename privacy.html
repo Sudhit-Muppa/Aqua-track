@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Privacy policy | Aqua Track</title>
-    <meta name="description" content="What the Aqua Track website collects (nothing directly), which outside services it loads, and how to reach us.">
+    <meta name="description" content="What the Aqua Track website and the AquaTrack app collect, who processes it, how long it stays and how to delete it.">
     <meta name="theme-color" content="#0B1F2A">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
@@ -37,23 +37,26 @@
             <h1>Privacy policy</h1>
 
             <div class="prose">
-                <p class="prose__lead">Short version: this website does not ask for, store or sell any information
-                    about you. It has no accounts, no forms, no analytics and no cookies of its own.</p>
+                <p class="notice"><strong>Draft.</strong> This policy is being reviewed before the AquaTrack app
+                    launches. It describes what the app and this website do today; the wording may still change.</p>
+
+                <p class="prose__lead">Short version: this website collects nothing about you. The AquaTrack app needs
+                    an account, and it keeps the water photos, locations and readings you choose to submit so they can
+                    appear on your map and, once you are verified, be shared with other members. We do not sell any
+                    of it, and we do not run ads.</p>
 
                 <h2>Who we are</h2>
                 <p>Aqua Track is a student water-quality project run by six high school students in Loudoun County,
-                    Virginia. This policy covers aquatrackproject.org. You can reach us at
+                    Virginia. This policy covers aquatrackproject.org and the AquaTrack app for iOS and Android. You
+                    can reach us at
                     <a href="mailto:theaquatrackinitiative@gmail.com">theaquatrackinitiative@gmail.com</a>.</p>
 
-                <h2>What we collect</h2>
-                <p>Nothing directly. The interactive probe runs entirely in your browser, and the slider values you
-                    pick are never sent anywhere.</p>
-                <p>If you email us, we receive your email address and whatever you write. We use it only to reply,
-                    and we will delete it if you ask.</p>
-
-                <h2>Services the site loads</h2>
-                <p>Like most websites, this one relies on a few outside services. Each one receives your IP address
-                    and basic browser details when your browser requests a file from it:</p>
+                <h2>The website</h2>
+                <p>The site has no accounts, forms, analytics or cookies of its own. The interactive probe runs in
+                    your browser, and the slider values you pick are never sent anywhere. If you email us, we receive
+                    your address and whatever you write. We use it only to reply, and we delete it if you ask.</p>
+                <p>Like most websites, this one loads a few files from outside services. Each one receives your IP
+                    address and basic browser details when your browser asks it for a file:</p>
                 <ul>
                     <li><strong>Vercel</strong> hosts the site and keeps standard server logs to deliver and protect
                         it. <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel
@@ -61,28 +64,123 @@
                     <li><strong>Google Fonts</strong> serves the typefaces. <a
                             href="https://developers.google.com/fonts/faq/privacy" target="_blank"
                             rel="noopener">Google Fonts privacy FAQ</a>.</li>
-                    <li><strong>unpkg</strong> serves Leaflet, the open-source map library.</li>
+                    <li><strong>unpkg</strong> serves Leaflet, the open-source map library, and <strong>jsDelivr</strong>
+                        serves the Supabase library used only on the account page.</li>
                     <li><strong>OpenStreetMap</strong> serves the map tiles in the watershed chart. <a
                             href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank"
                             rel="noopener">OpenStreetMap Foundation privacy policy</a>.</li>
                 </ul>
-                <p>Links to Instagram take you to Instagram's own site, where its policies apply.</p>
+                <p>The account page at aquatrackproject.org/auth.html finishes email confirmations and password resets
+                    for the app. It talks to Supabase, our sign-in provider, keeps nothing in your browser once it is
+                    done, and sets no cookies. Links to Instagram take you to Instagram's own site, where its policies
+                    apply.</p>
 
-                <h2>Cookies</h2>
-                <p>We do not set cookies or use browser storage, and none of the services above need cookies to load
-                    these files. That is why there is no cookie banner.</p>
+                <h2>The app: what you give us</h2>
+                <ul>
+                    <li><strong>Account.</strong> Your email address and password, a display name, the town or area
+                        you type in, and your age. Supabase stores the password as a hash; we never see it. Age is
+                        used to confirm you are 13 or older.</li>
+                    <li><strong>Water readings.</strong> The photo you take, the river you pick, the GPS location of
+                        the photo, any meter readings you type in (pH, temperature, turbidity and so on) and an
+                        optional caption.</li>
+                    <li><strong>Home water tests.</strong> The name and notes you give a private water body such as a
+                        tap or a well, and the readings you log for it.</li>
+                    <li><strong>Posts.</strong> Problem reports with a photo, a location and a description, and your
+                        comments and likes on other members' posts.</li>
+                    <li><strong>Profile picture.</strong> Optional. It is stored at a public web address so it can
+                        appear next to your posts.</li>
+                    <li><strong>Verification request.</strong> The full name, location and short statement you send
+                        when you ask to be verified. A team member reads it.</li>
+                </ul>
+                <p>Automatically, our server records the IP address, device type and time of each request in standard
+                    logs, and the app keeps your sign-in token on your phone so you stay signed in.</p>
+
+                <h2>How we use it</h2>
+                <ul>
+                    <li>To run the app: show your readings on your map, keep you signed in, and let you edit or
+                        delete what you submitted.</li>
+                    <li>To score the water. Each photo, together with any meter readings you added and public
+                        historical data for that river, is sent through
+                        <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener">OpenRouter</a> to a free
+                        AI vision model (currently Google's Gemma or NVIDIA's Nemotron), which returns the analysis you
+                        see in the app. The photo is sent without your name, email or account details. Free models
+                        are run by outside providers who may log what they receive and may use it to improve their
+                        models, so do not photograph people or anything private.</li>
+                    <li>To answer river questions and search reference data, short text (never your photos) goes to
+                        Google's <a href="https://ai.google.dev/gemini-api/terms" target="_blank"
+                            rel="noopener">Gemini API</a>.</li>
+                    <li>To build river statistics: approved readings from verified members feed each river's score,
+                        trend and health distribution.</li>
+                    <li>To review: team members read verification requests and approve public readings before they
+                        appear to others.</li>
+                    <li>To reply when you contact us, and to send account emails such as confirmation and password
+                        reset.</li>
+                </ul>
+                <p>We do not sell personal information, we do not share it with advertisers, and we do not train AI
+                    models on it ourselves. The free model providers described above may use the photos they
+                    receive to improve their models.</p>
+
+                <h2>Who can see what</h2>
+                <p>Until you are verified, your readings and home tests are visible only to you and to the team members
+                    who review them. Nothing you submit appears in the public feed or in river statistics.</p>
+                <p>Once verified, your approved readings, problem reports, comments, display name, profile picture and
+                    verified mark are visible to every AquaTrack member, and the GPS pin of a reading or report is
+                    shown on the map. Your email address, age and password are never shown to anyone.</p>
+
+                <h2>Where it is stored and who processes it</h2>
+                <ul>
+                    <li><strong>Supabase</strong> runs the database, file storage and sign-in, in the United States.
+                        <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase privacy
+                            policy</a>.</li>
+                    <li><strong>Google Cloud</strong> runs the AquaTrack server (Cloud Run, US East) and the Gemini API
+                        used for river questions and search. <a href="https://policies.google.com/privacy"
+                            target="_blank" rel="noopener">Google privacy policy</a>.</li>
+                    <li><strong>OpenRouter</strong> routes each photo to a free AI vision model that scores it. The
+                        model provider receives the photo, any meter readings and river context, but not your name or
+                        email. <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener">OpenRouter
+                            privacy policy</a>.</li>
+                    <li><strong>Esri and OpenStreetMap</strong> provide the map tiles in the app. Your phone requests
+                        tiles straight from Esri's servers, which see your IP address and the map area you are
+                        viewing. <a href="https://www.esri.com/en-us/privacy/overview" target="_blank"
+                            rel="noopener">Esri privacy</a>.</li>
+                </ul>
+                <p>The apps contain no analytics, advertising or tracking software.</p>
+
+                <h2>How long we keep it</h2>
+                <p>Your readings, posts and profile stay until you delete them or your account. Deleting a reading or
+                    post removes it right away. Deleting your account removes everything listed on the
+                    <a href="delete-account.html">account deletion page</a>, including your photos and your sign-in.
+                    Server logs are kept for 30 days. Database backups age out within 30 days.</p>
 
                 <h2>Children</h2>
-                <p>We do not knowingly collect personal information from anyone, including children under 13. If a
-                    child has emailed us, a parent or guardian can ask us to delete that message.</p>
+                <p>You must be 13 or older to create an account. The sign-up form refuses younger ages, and we delete
+                    any account we learn belongs to a child under 13. If you are between 13 and 17, a parent or
+                    guardian can email us to see or delete your data, and we will act on it as if you had asked.</p>
 
-                <h2>Deleting your information</h2>
-                <p>To have anything you sent us deleted, email
-                    <a href="mailto:theaquatrackinitiative@gmail.com">theaquatrackinitiative@gmail.com</a> with the
-                    subject "Delete my data". We will delete it and confirm within 30 days.</p>
+                <h2>Your choices</h2>
+                <ul>
+                    <li>Edit your display name, location and profile picture in Profile.</li>
+                    <li>Location access is needed to log a reading. You can turn it off in your phone's settings at any
+                        time, which stops the app from reading your location.</li>
+                    <li>Delete any reading, home test, post or comment from the app.</li>
+                    <li>Delete your whole account from Profile, or by email, as described on the
+                        <a href="delete-account.html">account deletion page</a>.</li>
+                    <li>Email us for a copy of the data we hold about you. We answer within 30 days.</li>
+                </ul>
+
+                <h2>Security</h2>
+                <p>Traffic between the app, our server and Supabase is encrypted. Your sign-in token lives in the app's
+                    private storage on your phone, which other apps cannot read. Only team members with a reason to
+                    review content can see unpublished readings. No system is perfectly secure; if we learn of a
+                    breach affecting your data, we will email you.</p>
 
                 <h2>Changes</h2>
-                <p>If this policy changes, we will update it here and change the date at the top.</p>
+                <p>If this policy changes, we will update it here and change the date at the top. For a change that
+                    matters to you, we will also say so in the app.</p>
+
+                <h2>Contact</h2>
+                <p>Questions and requests go to
+                    <a href="mailto:theaquatrackinitiative@gmail.com">theaquatrackinitiative@gmail.com</a>.</p>
             </div>
         </div>
     </main>
@@ -98,8 +196,9 @@
                 <li><a href="mailto:theaquatrackinitiative@gmail.com">theaquatrackinitiative@gmail.com</a></li>
                 <li><a href="privacy.html" aria-current="page">Privacy</a></li>
                 <li><a href="terms.html">Terms</a></li>
+                <li><a href="delete-account.html">Account deletion</a></li>
             </ul>
-            <p class="footer__meta footer__meta--dim">&copy; 2025 Aqua Track</p>
+            <p class="footer__meta footer__meta--dim">&copy; 2026 Aqua Track</p>
         </div>
     </footer>
 </body>
