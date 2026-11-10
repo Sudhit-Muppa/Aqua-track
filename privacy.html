@@ -100,10 +100,15 @@
                     <li>To run the app: show your readings on your map, keep you signed in, and let you edit or
                         delete what you submitted.</li>
                     <li>To score the water. Each photo, together with any meter readings you added and public
-                        historical data for that river, is sent to Google's Gemini API, which returns the analysis you
-                        see in the app. Google processes it under its
-                        <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Gemini API
-                            terms</a>.</li>
+                        historical data for that river, is sent through
+                        <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener">OpenRouter</a> to a free
+                        AI vision model (currently Google's Gemma or NVIDIA's Nemotron), which returns the analysis you
+                        see in the app. The photo is sent without your name, email or account details. Free models
+                        are run by outside providers who may log what they receive and may use it to improve their
+                        models, so do not photograph people or anything private.</li>
+                    <li>To answer river questions and search reference data, short text (never your photos) goes to
+                        Google's <a href="https://ai.google.dev/gemini-api/terms" target="_blank"
+                            rel="noopener">Gemini API</a>.</li>
                     <li>To build river statistics: approved readings from verified members feed each river's score,
                         trend and health distribution.</li>
                     <li>To review: team members read verification requests and approve public readings before they
@@ -111,8 +116,9 @@
                     <li>To reply when you contact us, and to send account emails such as confirmation and password
                         reset.</li>
                 </ul>
-                <p>We do not sell personal information, we do not share it with advertisers, and we do not use it to
-                    train AI models.</p>
+                <p>We do not sell personal information, we do not share it with advertisers, and we do not train AI
+                    models on it ourselves. The free model providers described above may use the photos they
+                    receive to improve their models.</p>
 
                 <h2>Who can see what</h2>
                 <p>Until you are verified, your readings and home tests are visible only to you and to the team members
@@ -127,8 +133,12 @@
                         <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase privacy
                             policy</a>.</li>
                     <li><strong>Google Cloud</strong> runs the AquaTrack server (Cloud Run, US East) and the Gemini API
-                        that analyzes photos. <a href="https://policies.google.com/privacy" target="_blank"
-                            rel="noopener">Google privacy policy</a>.</li>
+                        used for river questions and search. <a href="https://policies.google.com/privacy"
+                            target="_blank" rel="noopener">Google privacy policy</a>.</li>
+                    <li><strong>OpenRouter</strong> routes each photo to a free AI vision model that scores it. The
+                        model provider receives the photo, any meter readings and river context, but not your name or
+                        email. <a href="https://openrouter.ai/privacy" target="_blank" rel="noopener">OpenRouter
+                            privacy policy</a>.</li>
                     <li><strong>Esri and OpenStreetMap</strong> provide the map tiles in the app. Your phone requests
                         tiles straight from Esri's servers, which see your IP address and the map area you are
                         viewing. <a href="https://www.esri.com/en-us/privacy/overview" target="_blank"
